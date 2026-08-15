@@ -8,6 +8,8 @@ import VideoGuideModal from "../components/VideoGuideModal";
 
 // Link nhóm Zalo nơi khách nhận My ID — dùng để khách gửi lệnh rút tiền vào nhóm.
 const ZALO_GROUP_LINK = "https://zalo.me/g/9z3rc8twl2d8oss7ttn3";
+// Nhóm Zalo riêng để gửi lệnh rút tiền (tab Ví Tiền → "Gửi vào nhóm").
+const WITHDRAW_ZALO_GROUP_LINK = "https://zalo.me/g/udohxsw517msr8g6xec6";
 
 const PAGE_SIZE = 10;
 const PAGE_WINDOW = 10;
@@ -50,9 +52,9 @@ const STATUS_FILTERS = [
 // Hoa hồng: đỏ san hô, Sau thuế: tím, Hoa hồng thực nhận: xanh lá sáng (theo ảnh mẫu).
 // Khung (border) của cả 3 ô dùng chung 1 màu tím nhạt theo tông nền của app.
 const AMOUNT_COLORS = {
-  gross: { solid: "#e0524f", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
-  afterTax: { solid: "#2f6fed", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
-  final80: { solid: "#0ecb81", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
+  gross: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
+  afterTax: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
+  final80: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
 };
 
 // Màu xanh lá cây sáng dùng chung cho số tiền "Hoa hồng ước tính" ở mọi nơi.
@@ -460,7 +462,6 @@ export default function DashboardClient({
   const [bxhPageWindowStart, setBxhPageWindowStart] = useState(0);
 
   // Ví tiền: yêu cầu rút.
-  const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawError, setWithdrawError] = useState("");
   const [withdrawCode, setWithdrawCode] = useState("");
   const [withdrawCopied, setWithdrawCopied] = useState(false);
@@ -823,26 +824,16 @@ export default function DashboardClient({
     router.refresh();
   }
 
-  function handleWithdrawAmountChange(e) {
-    setWithdrawAmount(formatAmountInput(e.target.value));
-  }
-
   function handleWithdrawRequest() {
     setWithdrawError("");
     setWithdrawCode("");
     setWithdrawCopied(false);
-    const amount = parseVndInput(withdrawAmount);
     const available = wallet ? wallet.coTheRutHien : 0;
-    if (!amount || amount <= 0) {
-      setWithdrawError("Vui lòng nhập số tiền muốn rút.");
+    if (!available || available <= 0) {
+      setWithdrawError("Hiện chưa có số tiền nào có sẵn để rút.");
       return;
     }
-    if (amount > available) {
-      const suggested = Math.max(available - 1, 0);
-      setWithdrawError(`Hãy bỏ lại 1đ nhé. Rút ${formatVnd(suggested)} đi ${displayName}.`);
-      return;
-    }
-    setWithdrawCode(`#ruttien_${amount}`);
+    setWithdrawCode("#ruttien");
   }
 
   async function handleCopyWithdrawCode() {
@@ -899,7 +890,7 @@ export default function DashboardClient({
       <header className="border-b border-border sticky top-0 z-40 sticky-blur-bg">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex flex-col items-start gap-0.5">
-            <span className="font-display font-semibold text-sm tracking-tight">Hoàn Tiền Cùng Dâu Tây 🍓</span>
+            <span className="font-display font-semibold text-sm tracking-tight">Meozz - Hoàn Tiền 🍓</span>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="flex items-center gap-1.5 sm:gap-2 bg-panel border border-border rounded-full pl-2.5 sm:pl-3 pr-1 py-1">
@@ -1039,26 +1030,26 @@ export default function DashboardClient({
                   onClick={() => handleCreateModeChange("single")}
                   className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border-2 transition-all cursor-pointer ${
                     createMode === "single"
-                      ? "bg-[#ffe8d1] border-[#b56a12] text-[#b56a12] shadow-sm scale-[1.03]"
-                      : "bg-[#fff6ec] border-[#ffe3c2] text-[#c98a3f] hover:brightness-95"
+                      ? "bg-[#ffe8d1] border-[#b56a12] text-black shadow-sm scale-[1.03]"
+                      : "bg-[#fff6ec] border-[#ffe3c2] text-black hover:brightness-95"
                   }`}
                 >
                   🎀 Tạo 1 link
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setShowVideoGuide(true)}
-                  className="px-1 text-[11px] sm:text-xs font-bold text-red-500 underline underline-offset-2 hover:text-red-600 transition-colors cursor-pointer shrink-0"
+                <span
+                  aria-disabled="true"
+                  title="Video hướng dẫn tạm thời không khả dụng"
+                  className="px-1 text-[11px] sm:text-xs font-bold text-muted cursor-not-allowed shrink-0 select-none"
                 >
                   Video hướng dẫn
-                </button>
+                </span>
                 <button
                   type="button"
                   onClick={() => handleCreateModeChange("multi")}
                   className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border-2 transition-all cursor-pointer ${
                     createMode === "multi"
-                      ? "bg-[#ff8383] border-[#e94f4f] text-white shadow-sm scale-[1.03]"
-                      : "bg-[#ffe4e4] border-[#ffc4c4] text-[#c34848] hover:brightness-95"
+                      ? "bg-[#ff8383] border-[#e94f4f] text-black shadow-sm scale-[1.03]"
+                      : "bg-[#ffe4e4] border-[#ffc4c4] text-black hover:brightness-95"
                   }`}
                 >
                   🎀 Tạo nhiều link
@@ -1725,21 +1716,21 @@ export default function DashboardClient({
                             style={{ border: `1px solid ${AMOUNT_COLORS.gross.border}`, background: AMOUNT_COLORS.gross.soft }}
                           >
                             <p className="text-[10px] tracking-tight whitespace-nowrap text-ink font-semibold">Hoa hồng</p>
-                            <p className="font-mono-num text-sm font-bold whitespace-nowrap" style={{ color: AMOUNT_COLORS.gross.solid }}>{formatVnd(gross)}</p>
+                            <p className="font-mono-num text-sm font-extrabold whitespace-nowrap" style={{ color: AMOUNT_COLORS.gross.solid }}>{formatVnd(gross)}</p>
                           </div>
                           <div
                             className="text-center rounded-lg py-1.5"
                             style={{ border: `1px solid ${AMOUNT_COLORS.afterTax.border}`, background: AMOUNT_COLORS.afterTax.soft }}
                           >
                             <p className="text-[10px] tracking-tight whitespace-nowrap text-ink font-semibold">Sau thuế</p>
-                            <p className="font-mono-num text-sm font-bold whitespace-nowrap" style={{ color: AMOUNT_COLORS.afterTax.solid }}>{formatVnd(afterTax)}</p>
+                            <p className="font-mono-num text-sm font-extrabold whitespace-nowrap" style={{ color: AMOUNT_COLORS.afterTax.solid }}>{formatVnd(afterTax)}</p>
                           </div>
                           <div
                             className="text-center rounded-lg py-1.5"
                             style={{ border: `1px solid ${AMOUNT_COLORS.final80.border}`, background: AMOUNT_COLORS.final80.soft }}
                           >
                             <p className="text-[10px] tracking-tight whitespace-nowrap text-ink font-semibold">Hoa hồng thực nhận</p>
-                            <p className="font-mono-num text-sm font-bold whitespace-nowrap" style={{ color: AMOUNT_COLORS.final80.solid }}>{formatVnd(final80)}</p>
+                            <p className="font-mono-num text-sm font-extrabold whitespace-nowrap" style={{ color: AMOUNT_COLORS.final80.solid }}>{formatVnd(final80)}</p>
                           </div>
                         </div>
                       </div>
@@ -1781,13 +1772,13 @@ export default function DashboardClient({
                                 {orderNumber}.🛍️ {truncateChars(order.productName, 60)}
                               </span>
                             </td>
-                            <td className="px-4 py-3.5 text-right font-mono-num font-bold" style={{ color: AMOUNT_COLORS.gross.solid }}>
+                            <td className="px-4 py-3.5 text-right font-mono-num font-extrabold" style={{ color: AMOUNT_COLORS.gross.solid }}>
                               {formatVnd(gross)}
                             </td>
-                            <td className="px-4 py-3.5 text-right font-mono-num font-bold" style={{ color: AMOUNT_COLORS.afterTax.solid }}>
+                            <td className="px-4 py-3.5 text-right font-mono-num font-extrabold" style={{ color: AMOUNT_COLORS.afterTax.solid }}>
                               {formatVnd(afterTax)}
                             </td>
-                            <td className="px-4 py-3.5 text-right font-mono-num font-bold" style={{ color: AMOUNT_COLORS.final80.solid }}>
+                            <td className="px-4 py-3.5 text-right font-mono-num font-extrabold" style={{ color: AMOUNT_COLORS.final80.solid }}>
                               {formatVnd(final80)}
                             </td>
                             <td className="px-4 py-3.5">
@@ -1868,31 +1859,21 @@ export default function DashboardClient({
           <div className="ticket-notch bg-panel border border-border rounded-2xl overflow-hidden max-w-md">
             <div className="p-6 sm:p-7">
               <p className="text-xs text-muted uppercase tracking-widest mb-2">Có sẵn để rút</p>
-              <div className="inline-block border border-border bg-panel-2 rounded-xl px-4 py-2.5">
-                <p className="font-display font-bold text-4xl text-cream tabular-nums">
+              <div className="inline-block border border-[#8fe0b0] bg-[#e9fbf1] rounded-xl px-4 py-2.5">
+                <p className="font-display font-bold text-4xl text-[#22c55e] tabular-nums">
                   {wallet ? formatVnd(wallet.coTheRutHien) : "—"}
                 </p>
               </div>
 
               {wallet && (
                 <div className="mt-4 space-y-3">
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={withdrawAmount}
-                      onChange={handleWithdrawAmountChange}
-                      placeholder="Nhập số tiền muốn rút"
-                      className="flex-1 bg-surface border border-border rounded-lg px-3.5 py-2.5 text-base sm:text-sm outline-none focus:border-gold transition-colors placeholder:text-muted/60"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleWithdrawRequest}
-                      className="bg-[#22c55e] hover:bg-[#16a34a] text-white font-semibold rounded-lg px-4 py-2.5 text-sm transition-colors cursor-pointer shrink-0"
-                    >
-                      Rút ngay
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={handleWithdrawRequest}
+                    className="w-full bg-[#22c55e] hover:bg-[#16a34a] text-white font-semibold rounded-lg px-4 py-2.5 text-sm transition-colors cursor-pointer"
+                  >
+                    Rút ngay
+                  </button>
 
                   {withdrawError && (
                     <p className="text-xs text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2">
@@ -1923,7 +1904,7 @@ export default function DashboardClient({
                         )}
                       </div>
                       <a
-                        href={ZALO_GROUP_LINK}
+                        href={WITHDRAW_ZALO_GROUP_LINK}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block text-center bg-highlight hover:brightness-95 text-white text-sm font-semibold rounded-lg px-3.5 py-2.5 transition-all active:scale-[0.98] cursor-pointer"
@@ -1949,13 +1930,13 @@ export default function DashboardClient({
                     className="inline-flex items-center justify-center w-full bg-[#fff4b8] border border-[#f5c944] text-[#8a6412] font-bold rounded-full px-3 py-1.5 text-center whitespace-nowrap overflow-hidden"
                     style={{ fontSize: "clamp(8px, 2.6vw, 12px)" }}
                   >
-                    💡Hoa hồng ở &gt;Đã hoàn thành&lt; sẽ chuyển qua &gt;Có sẵn để rút&lt; sau 7 ngày
+                    💡Các đơn đã hoàn thành sau 7 ngày sẽ rút được ngay!
                   </p>
                 </div>
                 <div className="p-6 sm:p-7 pt-4 grid grid-cols-2 gap-4">
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟡 Tổng hoa hồng</p>
-                    <p className="font-mono-num text-lg font-bold text-cream">
+                    <p className="font-mono-num text-lg font-bold text-[#2f6fed]">
                       {formatVnd(
                         wallet.dangCho + wallet.hoanThanhChuaRut + wallet.coTheRutHien + wallet.daNhan
                       )}
@@ -1963,19 +1944,19 @@ export default function DashboardClient({
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟣 Đang chờ xử lý</p>
-                    <p className="font-mono-num text-lg font-bold text-cream">
+                    <p className="font-mono-num text-lg font-bold text-[#eab308]">
                       {formatVnd(wallet.dangCho)}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟢 Đã hoàn thành</p>
-                    <p className="font-mono-num text-lg font-bold text-cream">
+                    <p className="font-mono-num text-lg font-bold text-[#22c55e]">
                       {formatVnd(wallet.hoanThanhChuaRut)}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🔴 Đã nhận</p>
-                    <p className="font-mono-num text-lg font-bold text-cream">
+                    <p className="font-mono-num text-lg font-bold text-[#ef4444]">
                       {formatVnd(wallet.daNhan)}
                     </p>
                   </div>
@@ -2155,12 +2136,12 @@ export default function DashboardClient({
           <p className="text-[11px] text-muted">
             Liên hệ hỗ trợ:{" "}
             <a
-              href="https://zalo.me/0964763209"
+              href="https://zalo.me/0397088175"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#3f95b0] font-bold hover:underline"
             >
-              Zalo (0964763209)
+              Zalo (0397088175)
             </a>
           </p>
         </div>
