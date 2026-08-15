@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DEFAULT_THEME, getStoredTheme } from "../../lib/theme";
+import { commissionBreakdown } from "../../lib/botLogic";
 import VideoGuideModal from "../components/VideoGuideModal";
 
 // Link nhóm Zalo nơi khách nhận My ID — dùng để khách gửi lệnh rút tiền vào nhóm.
@@ -43,14 +44,6 @@ const STATUS_FILTERS = [
   { key: "pending", label: "Chờ xử lý", solid: "#eab308", soft: STATUS_COLORS.yellow.soft },
   { key: "cancelled", label: "Đã hủy", solid: "#ef4444", soft: STATUS_COLORS.red.soft },
 ];
-
-// Chiết khấu hiển thị theo từng đơn: hoa hồng gốc -> trừ thuế 10% -> còn 80% hoa hồng thực nhận.
-function commissionBreakdown(grossCommission) {
-  const gross = Number(grossCommission) || 0;
-  const afterTax = Math.round(gross * 0.9);
-  const final80 = Math.round(afterTax * 0.8);
-  return { gross, afterTax, final80 };
-}
 
 // Màu số tiền cho 3 ô Hoa hồng / Sau thuế / Hoa hồng thực nhận — mỗi ô một màu
 // riêng nhưng cùng một độ sáng/độ rực ngang nhau (không ô nào đậm/nhạt hơn ô nào):
@@ -1685,7 +1678,7 @@ export default function DashboardClient({
                 <div className="sm:hidden flex flex-col gap-3 p-3">
                   {pagedOrders.map((order, i) => {
                     const meta = statusMeta(order.status);
-                    const { gross, afterTax, final80 } = commissionBreakdown(order.commission);
+                    const { gross, afterTax, final80 } = commissionBreakdown(order.commission, order.orderedAt);
                     const orderNumber = String(
                       orderOriginalNumber.get(order.id) || (orderPage - 1) * PAGE_SIZE + i + 1
                     ).padStart(2, "0");
@@ -1778,7 +1771,7 @@ export default function DashboardClient({
                     <tbody>
                       {pagedOrders.map((order, i) => {
                         const meta = statusMeta(order.status);
-                        const { gross, afterTax, final80 } = commissionBreakdown(order.commission);
+                        const { gross, afterTax, final80 } = commissionBreakdown(order.commission, order.orderedAt);
                         const orderNumber = String(
                           orderOriginalNumber.get(order.id) || (orderPage - 1) * PAGE_SIZE + i + 1
                         ).padStart(2, "0");
@@ -1962,7 +1955,7 @@ export default function DashboardClient({
                     className="inline-flex items-center justify-center w-full bg-[#fff4b8] border border-[#f5c944] text-[#8a6412] font-bold rounded-full px-3 py-1.5 text-center whitespace-nowrap overflow-hidden"
                     style={{ fontSize: "clamp(8px, 2.6vw, 12px)" }}
                   >
-                    💡Hoa hồng ở &gt;Đã hoàn thành&lt; sẽ chuyển qua &gt;Có sẵn để rút&lt; sau 1 ngày
+                    💡Hoa hồng ở &gt;Đã hoàn thành&lt; sẽ chuyển qua &gt;Có sẵn để rút&lt; sau 7 ngày
                   </p>
                 </div>
                 <div className="p-6 sm:p-7 pt-4 grid grid-cols-2 gap-4">
@@ -1970,17 +1963,14 @@ export default function DashboardClient({
                     <p className="text-xs text-muted mb-1">🟡 Tổng hoa hồng</p>
                     <p className="font-mono-num text-lg font-bold text-[#eab308]">
                       {formatVnd(
-                        commissionBreakdown(wallet.dangCho).final80 +
-                          wallet.hoanThanhChuaRut +
-                          wallet.coTheRutHien +
-                          wallet.daNhan
+                        wallet.dangCho + wallet.hoanThanhChuaRut + wallet.coTheRutHien + wallet.daNhan
                       )}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟣 Đang chờ xử lý</p>
                     <p className="font-mono-num text-lg font-bold text-[#e0609c]">
-                      {formatVnd(commissionBreakdown(wallet.dangCho).final80)}
+                      {formatVnd(wallet.dangCho)}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
