@@ -224,7 +224,7 @@ export default function LoginPage() {
               <StrawberryIcon className="w-6 h-6" />
             </div>
             <span className="font-display font-semibold text-lg tracking-tight">
-              Mua sắm hoàn tiền cùng Dâu Tây
+              Meozz - Hoàn Tiền
             </span>
           </div>
           <p className="text-muted text-sm mb-3">Shop càng nhiều hoàn càng đã 🐾</p>
@@ -253,7 +253,7 @@ export default function LoginPage() {
               <div className="w-10 h-7 rounded-md overflow-hidden shadow-sm shadow-black/10 shrink-0">
                 <VietnamFlagIcon className="w-full h-full" />
               </div>
-              <div className="brand-badge" title="Hoàn tiền cùng Dâu Tây">
+              <div className="brand-badge" title="Meozz - Hoàn Tiền">
                 <img src="/brand/logo-shield.png" alt="Hoàn tiền mua hàng" />
               </div>
             </div>
@@ -386,12 +386,12 @@ export default function LoginPage() {
                 <p className="text-[11px] text-muted">
                   Liên hệ hỗ trợ:{" "}
                   <a
-                    href="https://zalo.me/0964763209"
+                    href="https://zalo.me/0397088175"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#3f95b0] font-bold hover:underline"
                   >
-                    Zalo (0964763209)
+                    Zalo (0397088175)
                   </a>
                 </p>
               </div>
