@@ -48,14 +48,7 @@ export default function AddToHomeScreenModal() {
               Cách thêm web vào màn hình chính trên điện thoại
             </h2>
 
-            <video
-              src="/add-to-home-screen-guide.mp4"
-              className="mx-auto w-full rounded-2xl object-contain"
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
+            {/* Video hướng dẫn đã bị vô hiệu hóa theo yêu cầu — không còn phát nữa. */}
           </div>
 
           <div className="mt-3 flex flex-shrink-0 flex-col gap-2">
