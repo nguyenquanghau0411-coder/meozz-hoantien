@@ -54,7 +54,7 @@ const STATUS_FILTERS = [
 const AMOUNT_COLORS = {
   gross: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
   afterTax: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
-  final80: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
+  final80: { solid: "#111111", border: "rgba(34,197,94,0.35)", soft: "rgba(34,197,94,0.14)" },
 };
 
 // Màu xanh lá cây sáng dùng chung cho số tiền "Hoa hồng ước tính" ở mọi nơi.
@@ -1028,10 +1028,10 @@ export default function DashboardClient({
                 <button
                   type="button"
                   onClick={() => handleCreateModeChange("single")}
-                  className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border-2 transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border-2 transition-all cursor-pointer bg-transparent ${
                     createMode === "single"
-                      ? "bg-[#ffe8d1] border-[#b56a12] text-black shadow-sm scale-[1.03]"
-                      : "bg-[#fff6ec] border-[#ffe3c2] text-black hover:brightness-95"
+                      ? "border-[#b56a12] text-black shadow-sm scale-[1.03]"
+                      : "border-[#ffe3c2] text-black hover:brightness-95"
                   }`}
                 >
                   🎀 Tạo 1 link
@@ -1046,10 +1046,10 @@ export default function DashboardClient({
                 <button
                   type="button"
                   onClick={() => handleCreateModeChange("multi")}
-                  className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border-2 transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border-2 transition-all cursor-pointer bg-transparent ${
                     createMode === "multi"
-                      ? "bg-[#ff8383] border-[#e94f4f] text-black shadow-sm scale-[1.03]"
-                      : "bg-[#ffe4e4] border-[#ffc4c4] text-black hover:brightness-95"
+                      ? "border-[#e94f4f] text-black shadow-sm scale-[1.03]"
+                      : "border-[#ffc4c4] text-black hover:brightness-95"
                   }`}
                 >
                   🎀 Tạo nhiều link
@@ -1935,28 +1935,28 @@ export default function DashboardClient({
                 </div>
                 <div className="p-6 sm:p-7 pt-4 grid grid-cols-2 gap-4">
                   <div className="border border-border rounded-xl px-3.5 py-3">
-                    <p className="text-xs text-muted mb-1">🟡 Tổng hoa hồng</p>
-                    <p className="font-mono-num text-lg font-bold text-[#2f6fed]">
+                    <p className="text-xs text-muted mb-1">🟣 Tổng hoa hồng</p>
+                    <p className="font-mono-num text-lg font-bold text-black">
                       {formatVnd(
                         wallet.dangCho + wallet.hoanThanhChuaRut + wallet.coTheRutHien + wallet.daNhan
                       )}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
-                    <p className="text-xs text-muted mb-1">🟣 Đang chờ xử lý</p>
-                    <p className="font-mono-num text-lg font-bold text-[#eab308]">
+                    <p className="text-xs text-muted mb-1">🟡 Đang chờ xử lý</p>
+                    <p className="font-mono-num text-lg font-bold text-black">
                       {formatVnd(wallet.dangCho)}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟢 Đã hoàn thành</p>
-                    <p className="font-mono-num text-lg font-bold text-[#22c55e]">
+                    <p className="font-mono-num text-lg font-bold text-black">
                       {formatVnd(wallet.hoanThanhChuaRut)}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🔴 Đã nhận</p>
-                    <p className="font-mono-num text-lg font-bold text-[#ef4444]">
+                    <p className="font-mono-num text-lg font-bold text-black">
                       {formatVnd(wallet.daNhan)}
                     </p>
                   </div>
