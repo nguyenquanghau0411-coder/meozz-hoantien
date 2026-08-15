@@ -7,7 +7,7 @@ import { commissionBreakdown } from "../../lib/botLogic";
 import VideoGuideModal from "../components/VideoGuideModal";
 
 // Link nhóm Zalo nơi khách nhận My ID — dùng để khách gửi lệnh rút tiền vào nhóm.
-const ZALO_GROUP_LINK = "https://zalo.me/g/9z3rc8twl2d8oss7ttn3";
+const ZALO_GROUP_LINK = "https://zalo.me/g/udohxsw517msr8g6xec6";
 // Nhóm Zalo riêng để gửi lệnh rút tiền (tab Ví Tiền → "Gửi vào nhóm").
 const WITHDRAW_ZALO_GROUP_LINK = "https://zalo.me/g/udohxsw517msr8g6xec6";
 
@@ -54,8 +54,18 @@ const STATUS_FILTERS = [
 const AMOUNT_COLORS = {
   gross: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
   afterTax: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
-  final80: { solid: "#111111", border: "rgba(34,197,94,0.35)", soft: "rgba(34,197,94,0.14)" },
+  final80: { solid: "#111111", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
 };
+
+// "Hoa hồng thực nhận": khi > 0đ thì cả nền lẫn chữ màu xanh lá (giống badge
+// "Hoàn thành"); khi bằng 0đ thì dùng lại đúng màu trung tính như 2 ô còn lại
+// (Hoa hồng / Sau thuế) để không có cảm giác "đã nhận tiền" khi thực ra là 0đ.
+function final80Style(amount) {
+  if (amount > 0) {
+    return { solid: "#16a34a", border: "rgba(34,197,94,0.35)", soft: "rgba(34,197,94,0.14)" };
+  }
+  return AMOUNT_COLORS.final80;
+}
 
 // Màu xanh lá cây sáng dùng chung cho số tiền "Hoa hồng ước tính" ở mọi nơi.
 const ESTIMATE_GREEN = "#0ecb81";
@@ -1727,10 +1737,10 @@ export default function DashboardClient({
                           </div>
                           <div
                             className="text-center rounded-lg py-1.5"
-                            style={{ border: `1px solid ${AMOUNT_COLORS.final80.border}`, background: AMOUNT_COLORS.final80.soft }}
+                            style={{ border: `1px solid ${final80Style(final80).border}`, background: final80Style(final80).soft }}
                           >
                             <p className="text-[10px] tracking-tight whitespace-nowrap text-ink font-semibold">Hoa hồng thực nhận</p>
-                            <p className="font-mono-num text-sm font-extrabold whitespace-nowrap" style={{ color: AMOUNT_COLORS.final80.solid }}>{formatVnd(final80)}</p>
+                            <p className="font-mono-num text-sm font-extrabold whitespace-nowrap" style={{ color: final80Style(final80).solid }}>{formatVnd(final80)}</p>
                           </div>
                         </div>
                       </div>
@@ -1778,7 +1788,7 @@ export default function DashboardClient({
                             <td className="px-4 py-3.5 text-right font-mono-num font-extrabold" style={{ color: AMOUNT_COLORS.afterTax.solid }}>
                               {formatVnd(afterTax)}
                             </td>
-                            <td className="px-4 py-3.5 text-right font-mono-num font-extrabold" style={{ color: AMOUNT_COLORS.final80.solid }}>
+                            <td className="px-4 py-3.5 text-right font-mono-num font-extrabold" style={{ color: final80Style(final80).solid }}>
                               {formatVnd(final80)}
                             </td>
                             <td className="px-4 py-3.5">
