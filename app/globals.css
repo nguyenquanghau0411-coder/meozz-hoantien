@@ -34,18 +34,18 @@
 }
 
 html {
-  background: #f7f1ff;
+  background: #05070f;
   overscroll-behavior-y: none;
 }
 
 body {
-  background: #fff5f9;
+  background: #05070f;
   color: var(--cream);
   overscroll-behavior-y: none;
   background-image:
-    radial-gradient(ellipse 900px 520px at 100% -8%, rgba(212, 175, 55, 0.14), transparent 60%),
-    radial-gradient(ellipse 700px 460px at -5% 105%, rgba(224, 96, 156, 0.12), transparent 55%),
-    linear-gradient(160deg, #fff5f9 0%, #fbdce8 45%, #f8b8d6 100%);
+    radial-gradient(ellipse 900px 520px at 100% -8%, rgba(212, 175, 55, 0.16), transparent 60%),
+    radial-gradient(ellipse 700px 460px at -5% 105%, rgba(59, 130, 246, 0.14), transparent 55%),
+    linear-gradient(160deg, #05070f 0%, #0b1224 45%, #121c36 100%);
   background-attachment: fixed;
 }
 
@@ -106,46 +106,50 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Bảng màu Tím Nhạt (nhẹ mắt, dịu) — dùng chung cho cả trang
-   đăng nhập lẫn dashboard. Đây là bảng màu duy nhất của app,
-   không còn bộ chọn 7 màu.
+   Bảng màu Xanh Đen Sang Trọng (Navy & Gold) — dùng chung cho cả
+   trang đăng nhập lẫn dashboard. Đây là bảng màu duy nhất của app,
+   không còn bộ chọn 7 màu. Nền tối xanh đen + điểm nhấn vàng kim,
+   có họa tiết hình thoi tĩnh (không nhấp nháy) để tạo chiều sâu.
    ───────────────────────────────────────────────────────────── */
 .login-pink {
-  --ink: #4a1f38;
-  --surface: #fff6fa;
-  --panel: #fffdff;
-  --panel-2: #fbe2ec;
-  --border: #f0b8d3;
-  --gold: #e0609c;
-  --gold-soft: #ee85b3;
-  --mint: #f7b8d4;
-  --cream: #4a1f38;
-  --muted: #a37e93;
-  --danger: #d94f70;
-  --highlight: #c2185b;
+  --ink: #eef2fb;
+  --surface: #0e1526;
+  --panel: #131b30;
+  --panel-2: #1b2745;
+  --border: #2c3a5e;
+  --gold: #d4af37;
+  --gold-soft: #eccc72;
+  --mint: #5eead4;
+  --cream: #eef2fb;
+  --muted: #8896b8;
+  --danger: #ff6b6b;
+  --highlight: var(--gold);
 
-  /* Bảng nền hồng nhạt sáng, tươi tắn — dịu mắt, sang trọng. */
-  --bg-grad-1: #fff5f9;
-  --bg-grad-2: #fbdce8;
-  --bg-grad-3: #f8b8d6;
+  /* Nền xanh đen sâu, sang trọng, có ánh vàng kim + ánh xanh lam nhẹ. */
+  --bg-grad-1: #05070f;
+  --bg-grad-2: #0b1224;
+  --bg-grad-3: #121c36;
 
+  background-color: var(--bg-grad-1);
   background-image:
-    radial-gradient(ellipse 900px 520px at 100% -8%, rgba(212, 175, 55, 0.14), transparent 60%),
-    radial-gradient(ellipse 700px 460px at -5% 105%, rgba(224, 96, 156, 0.12), transparent 55%),
+    radial-gradient(ellipse 900px 560px at 100% -8%, rgba(212, 175, 55, 0.16), transparent 60%),
+    radial-gradient(ellipse 760px 520px at -8% 108%, rgba(59, 130, 246, 0.14), transparent 55%),
+    repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.05) 0px, rgba(212, 175, 55, 0.05) 1px, transparent 1px, transparent 34px),
+    repeating-linear-gradient(-45deg, rgba(212, 175, 55, 0.05) 0px, rgba(212, 175, 55, 0.05) 1px, transparent 1px, transparent 34px),
     linear-gradient(160deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 45%, var(--bg-grad-3) 100%);
   background-attachment: fixed;
   color: var(--cream);
 }
 
 .login-pink .field-important {
-  box-shadow: 0 0 0 3px rgba(224, 96, 156, 0.10);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
 }
 .login-pink .field-important:focus {
-  box-shadow: 0 0 0 3px rgba(224, 96, 156, 0.18);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.22);
 }
 .login-pink .ticket-notch::before,
 .login-pink .ticket-notch::after {
-  background: #ffe3ee;
+  background: #05070f;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -201,30 +205,21 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Khung đèn chạy 6 sắc cầu vồng — dùng cho các tiêu đề/khối
-   muốn nhấn mạnh, hiệu ứng viền sáng di chuyển liên tục.
+   Khung viền vàng kim tĩnh (không nhấp nháy/chạy sáng) — dùng cho
+   các tiêu đề/khối muốn nhấn mạnh, phong cách sang trọng, cố định.
    ───────────────────────────────────────────────────────────── */
 .rainbow-frame {
   position: relative;
-  padding: 3px;
+  padding: 2px;
   border-radius: 18px;
-  background: linear-gradient(
-    90deg,
-    #ff4d4d, #ff9d3b, #ffe93b, #4dd67a, #3bb8ff, #8a5cff, #ff4d4d
-  );
-  background-size: 300% 100%;
-  animation: rainbow-chase 5s linear infinite;
-  box-shadow: 0 4px 18px rgba(224, 96, 156, 0.25);
+  background: linear-gradient(120deg, #7a5a12, #eccc72, #d4af37, #f4e2a1, #d4af37, #7a5a12);
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.22);
 }
 .rainbow-frame-inner {
-  border-radius: 15px;
+  border-radius: 16px;
   background: var(--panel);
   height: 100%;
   width: 100%;
-}
-@keyframes rainbow-chase {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
 }
 
 /* Khung nhẹ, dịu mắt — dùng cho những dòng chữ chào cần đóng khung nhẹ */
@@ -234,22 +229,19 @@ body {
   border-radius: 14px;
 }
 
-/* Nút đăng nhập xanh lá đậm, nhấp nháy nhẹ dịu mắt */
+/* Nút đăng nhập / mua ngay xanh lá đậm — bóng cố định, sang trọng,
+   không còn nhấp nháy. */
 .btn-blink-green {
-  animation: btn-blink-glow 2.4s ease-in-out infinite;
-}
-@keyframes btn-blink-glow {
-  0%, 100% { box-shadow: 0 4px 14px rgba(31, 174, 102, 0.4); filter: brightness(1); }
-  50% { box-shadow: 0 4px 24px rgba(34, 197, 94, 0.75); filter: brightness(1.1); }
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.45);
 }
 
-/* Khung/ô nhấn mạnh số tiền quan trọng (vd "Hoa hồng thực nhận") — vàng nhạt
-   sang xanh lá nhạt, tĩnh, không chạy màu, không nhấp nháy, dịu mắt. */
+/* Khung/ô nhấn mạnh số tiền quan trọng (vd "Hoa hồng thực nhận") — viền
+   vàng kim sang trọng, tĩnh, không chạy màu, không nhấp nháy. */
 .rainbow-cell {
   position: relative;
   padding: 2px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #ffe9a8, #b7ecc6);
+  background: linear-gradient(90deg, #d4af37, #5eead4);
 }
 .rainbow-cell-inner {
   border-radius: 8px;
@@ -258,14 +250,11 @@ body {
   width: 100%;
 }
 
-/* Khung xanh lá nhạt sáng, nhấp nháy nhẹ dịu mắt — dùng để nhấn mạnh thông
-   báo "Đã tạo link hoàn tiền thành công" bên dưới nút tạo link. */
+/* Khung xanh lá đậm tĩnh — dùng để nhấn mạnh thông báo "Đã tạo link hoàn
+   tiền thành công" bên dưới nút tạo link. Không còn nhấp nháy. */
 .success-glow-green {
-  animation: success-glow 1.8s ease-in-out infinite;
-}
-@keyframes success-glow {
-  0%, 100% { background-color: rgba(34, 197, 94, 0.10); box-shadow: 0 0 0 rgba(34, 197, 94, 0); }
-  50% { background-color: rgba(34, 197, 94, 0.22); box-shadow: 0 0 12px rgba(34, 197, 94, 0.25); }
+  background-color: rgba(34, 197, 94, 0.14);
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.18);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -276,12 +265,12 @@ body {
   position: relative;
   padding: 2px;
   border-radius: 18px;
-  background: linear-gradient(135deg, #ffb066 0%, #ff7a1a 50%, #ffb066 100%);
-  box-shadow: 0 8px 20px rgba(255, 122, 26, 0.28);
+  background: linear-gradient(135deg, #d4af37 0%, #f4e2a1 50%, #d4af37 100%);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.30);
 }
 .vip-name-frame-inner {
   border-radius: 16px;
-  background: #ffffff;
+  background: #0e1526;
   height: 100%;
   width: 100%;
   padding: 0.7rem 1.35rem;
@@ -294,7 +283,7 @@ body {
   font-style: normal;
   font-weight: 700;
   letter-spacing: 0.01em;
-  color: #ff2f8f;
+  color: #eccc72;
 }
 .vip-name-input {
   font-family: var(--font-elegant), serif;
@@ -302,24 +291,24 @@ body {
   font-weight: 700;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(255, 47, 143, 0.4);
-  color: #ff2f8f;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+  color: #eccc72;
   outline: none;
 }
 .vip-name-input:focus {
-  border-bottom-color: #ff2f8f;
+  border-bottom-color: #eccc72;
 }
 .vip-edit-btn-outside {
   width: 34px;
   height: 34px;
   border-radius: 999px;
   background: var(--panel);
-  color: #e0609c;
+  color: #d4af37;
   border: 1.5px solid var(--border);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(224, 96, 156, 0.15);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.18);
   transition: all 0.15s ease;
 }
 .vip-edit-btn-outside:hover {
@@ -331,28 +320,28 @@ body {
    viền màu tím nhạt thay vì viền xám đơn điệu, đẹp mắt hơn. */
 .product-card {
   border-radius: 18px;
-  border: 1.5px solid #f3c6de;
+  border: 1.5px solid rgba(212, 175, 55, 0.28);
   background: var(--surface);
-  box-shadow: 0 4px 16px rgba(224, 96, 156, 0.10);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* Khung chung bao ngoài danh sách nhiều sản phẩm khi tạo nhiều link cùng
    lúc — tách biệt trực quan với khối bên trên. */
 .product-list-frame {
   border-radius: 20px;
-  border: 1.5px solid #f3c6de;
-  background: linear-gradient(180deg, #fff0f7, #fff8fb);
+  border: 1.5px solid rgba(212, 175, 55, 0.28);
+  background: linear-gradient(180deg, #121c36, #0e1526);
   padding: 14px;
 }
 
-/* Khung nhỏ màu xanh nhạt bọc quanh mọi số tiền/hoa hồng hiển thị trong
-   app (hoa hồng ước tính, hoa hồng, sau thuế, số dư ví...) — đồng bộ 1
-   kiểu nhấn mạnh số tiền ở mọi nơi. */
+/* Khung nhỏ bọc quanh mọi số tiền/hoa hồng hiển thị trong app (hoa hồng
+   ước tính, hoa hồng, sau thuế, số dư ví...) — tông xanh lam đậm sang
+   trọng, đồng bộ 1 kiểu nhấn mạnh số tiền ở mọi nơi. */
 .money-chip {
   display: inline-flex;
   align-items: center;
-  background: #e3f3ff;
-  border: 1px solid #bfe3fb;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.35);
   border-radius: 8px;
   padding: 1px 8px;
 }
@@ -361,7 +350,7 @@ body {
    cùng và khung tên khách hàng — để chữ/nội dung cuộn bên dưới không bị
    chồng lên, đồng thời không bị "trôi" mất khỏi màn hình. */
 .sticky-blur-bg {
-  background: rgba(255, 245, 249, 0.85);
+  background: rgba(10, 15, 28, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -375,8 +364,8 @@ body {
 /* Dòng cảnh báo "⚠️ Lưu ý quan trọng để được hoàn tiền" — nền vàng nhạt sáng,
    không viền. Tiêu đề + 5 gạch đầu dòng nằm chung 1 khối (không tách ô). */
 .notice-box {
-  background: #fff4b8;
-  border: 1.5px solid #f5c944;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
   border-radius: 14px;
   overflow: hidden;
 }
@@ -418,8 +407,8 @@ body {
    Hiển thị trước khi tạo link, tự ẩn sau khi tạo link thành công.
    ───────────────────────────────────────────────────────────── */
 .step-tracker-frame {
-  background: linear-gradient(180deg, #ffd7e6, #ffc2da);
-  border: 1.5px solid #ffabc9;
+  background: linear-gradient(180deg, #131b30, #0e1526);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
   border-radius: 18px;
   padding: 20px 14px 14px;
 }
@@ -444,26 +433,23 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  background: #fff0f5;
-  border: 2.5px solid #d6362f;
-  color: #d6362f;
+  background: #1b2745;
+  border: 2.5px solid #d4af37;
+  color: #eccc72;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(214, 54, 47, 0.18);
+  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.22);
 }
 .step-tracker-circle-final {
-  animation: step-tracker-final-pulse 3.6s ease-in-out infinite;
-}
-@keyframes step-tracker-final-pulse {
-  0%, 74% { box-shadow: 0 2px 6px rgba(214, 54, 47, 0.18); }
-  82% { box-shadow: 0 0 0 8px rgba(214, 54, 47, 0.28), 0 0 22px 4px rgba(255, 196, 0, 0.7); }
-  100% { box-shadow: 0 2px 6px rgba(214, 54, 47, 0.18); }
+  background: #d4af37;
+  color: #101627;
+  box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.18), 0 4px 14px rgba(212, 175, 55, 0.4);
 }
 .step-tracker-label {
   font-size: 11.5px;
   font-weight: 800;
-  color: #d6362f;
+  color: #eccc72;
   text-align: center;
   white-space: nowrap;
 }
@@ -486,78 +472,12 @@ body {
   right: 12.5%;
   height: 3px;
   border-radius: 3px;
-  background: rgba(214, 54, 47, 0.28);
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.55), rgba(212, 175, 55, 0.18));
 }
 @media (min-width: 640px) {
   .step-tracker-line {
     top: 25px;
   }
-}
-
-/* Đèn chạy dọc theo thanh nối, từ nút "Dán Link" tới nút "Hoàn Tiền" */
-.step-tracker-runner {
-  position: absolute;
-  z-index: 1;
-  top: 17px;
-  left: 12.5%;
-  width: 12px;
-  height: 12px;
-  margin-left: -6px;
-  border-radius: 999px;
-  background: radial-gradient(circle, #fff6e0 0%, #ffc400 45%, #ff5252 100%);
-  box-shadow: 0 0 10px 3px rgba(255, 82, 82, 0.75);
-  animation: step-tracker-runner-move 3.6s linear infinite;
-}
-@media (min-width: 640px) {
-  .step-tracker-runner {
-    top: 20px;
-  }
-}
-@keyframes step-tracker-runner-move {
-  0% { left: 12.5%; opacity: 1; }
-  76% { left: 87.5%; opacity: 1; }
-  80% { opacity: 0; }
-  100% { opacity: 0; left: 12.5%; }
-}
-
-/* Pháo hoa bắn tung tóe quanh nút "Hoàn Tiền" ngay khi đèn chạy tới nơi */
-.step-tracker-fireworks {
-  position: absolute;
-  z-index: 3;
-  top: 22px;
-  left: 87.5%;
-  width: 0;
-  height: 0;
-}
-@media (min-width: 640px) {
-  .step-tracker-fireworks {
-    top: 25px;
-  }
-}
-.step-tracker-spark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  border-radius: 999px;
-  opacity: 0;
-  animation: step-tracker-spark-burst 3.6s ease-out infinite;
-}
-.step-tracker-spark-0 { background: #ff5252; --tx: 0px; --ty: -34px; }
-.step-tracker-spark-1 { background: #ffc400; --tx: 24px; --ty: -24px; }
-.step-tracker-spark-2 { background: #ff8a3d; --tx: 34px; --ty: 0px; }
-.step-tracker-spark-3 { background: #ff4d8d; --tx: 24px; --ty: 24px; }
-.step-tracker-spark-4 { background: #ffe93b; --tx: 0px; --ty: 34px; }
-.step-tracker-spark-5 { background: #ff5252; --tx: -24px; --ty: 24px; }
-.step-tracker-spark-6 { background: #ffc400; --tx: -34px; --ty: 0px; }
-.step-tracker-spark-7 { background: #ff8a3d; --tx: -24px; --ty: -24px; }
-@keyframes step-tracker-spark-burst {
-  0%, 75% { opacity: 0; transform: translate(0, 0) scale(0.3); }
-  80% { opacity: 1; transform: translate(0, 0) scale(1); }
-  95% { opacity: 1; transform: translate(var(--tx), var(--ty)) scale(1); }
-  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.4); }
 }
 
 /* ─────────────────────────────────────────────────────────────
