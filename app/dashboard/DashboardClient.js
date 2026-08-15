@@ -1765,7 +1765,7 @@ export default function DashboardClient({
                             style={
                               order.platform === "tiktok"
                                 ? { background: "rgba(0,0,0,0.06)", color: "#111111" }
-                                : { background: "rgba(238,77,45,0.12)", color: "#ee4d2d" }
+                                : { background: "rgba(249,115,22,0.14)", color: "#f97316" }
                             }
                           >
                             {order.platform === "tiktok" ? "TikTok" : "Shopee"}
@@ -1864,7 +1864,7 @@ export default function DashboardClient({
                                 style={
                                   order.platform === "tiktok"
                                     ? { background: "rgba(0,0,0,0.06)", color: "#111111" }
-                                    : { background: "rgba(238,77,45,0.12)", color: "#ee4d2d" }
+                                    : { background: "rgba(249,115,22,0.14)", color: "#f97316" }
                                 }
                               >
                                 {order.platform === "tiktok" ? "TikTok" : "Shopee"}
