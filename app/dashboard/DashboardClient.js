@@ -253,20 +253,12 @@ function CtaStepTracker() {
       <div className="step-tracker-track">
         <span className="step-tracker-line" aria-hidden="true" />
         <div className="step-tracker-row">
-          {STEP_TRACKER_ITEMS.map((step) => (
+          {STEP_TRACKER_ITEMS.map((step, idx) => (
             <div key={step.key} className="step-tracker-item">
-              <span
-                className={`step-tracker-circle${
-                  step.key === "cashback" ? " step-tracker-circle-final" : ""
-                }`}
-              >
+              <span className={`step-tracker-circle step-tracker-circle-${idx}`}>
                 <step.Icon className="w-5 h-5 sm:w-6 sm:h-6" />
               </span>
-              <span
-                className={`step-tracker-label${
-                  step.key === "cashback" ? " step-tracker-label-final" : ""
-                }`}
-              >
+              <span className={`step-tracker-label step-tracker-label-${idx}`}>
                 {step.label}
               </span>
             </div>
