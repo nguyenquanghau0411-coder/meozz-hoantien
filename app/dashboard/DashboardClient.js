@@ -359,6 +359,21 @@ function rankTier(rank) {
   return RANK_TIERS.find((t) => t.rank === rank) || DEFAULT_TIER;
 }
 
+// commissionBreakdown() (lib/botLogic.js) dùng công thức + mốc ngày đổi tỉ lệ
+// riêng của Shopee — đơn TikTok đã quy đổi sẵn hoa hồng thực nhận theo
+// TIKTOK_NET_MULTIPLIER cố định (0.712) ngay từ lib/tiktok.js nên KHÔNG áp
+// lại công thức Shopee nữa, chỉ tính lại "sau thuế" (trừ 11%) để hiển thị
+// đủ 3 cột giống layout đơn Shopee.
+function commissionBreakdownForOrder(order) {
+  if (order.platform === "tiktok") {
+    const gross = Number(order.grossCommission) || 0;
+    const afterTax = Math.round(gross * 0.89); // trừ 11% thuế
+    const final80 = Number(order.commission) || 0; // đã quy đổi sẵn (TIKTOK_NET_MULTIPLIER)
+    return { gross, afterTax, final80 };
+  }
+  return commissionBreakdown(order.commission, order.orderedAt);
+}
+
 // Tối đa 10 link được tạo trong 1 lần dùng chế độ "Tạo nhiều link".
 const MAX_MULTI_LINKS = 10;
 
@@ -421,7 +436,31 @@ export default function DashboardClient({
   initialMyRank,
 }) {
   const router = useRouter();
-  const [orders] = useState(initialOrders || []);
+  // Đơn Shopee lấy sẵn từ server (initialOrders). Đơn TikTok gọi LIVE qua
+  // /api/orders-tiktok (RioHub) ngay khi trang tải xong, không chặn render
+  // ban đầu — nếu RioHub lỗi/timeout thì tiktokOrders vẫn là [] và đơn
+  // Shopee không bị ảnh hưởng gì.
+  const [tiktokOrders, setTiktokOrders] = useState([]);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/orders-tiktok")
+      .then((res) => (res.ok ? res.json() : { orders: [] }))
+      .then((data) => {
+        if (!cancelled) setTiktokOrders(Array.isArray(data.orders) ? data.orders : []);
+      })
+      .catch(() => {
+        // Bỏ qua lỗi mạng — tab Đơn hàng vẫn hiển thị đơn Shopee bình thường.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  const orders = useMemo(() => {
+    const shopeeOrders = (initialOrders || []).map((o) => ({ ...o, platform: "shopee" }));
+    return [...shopeeOrders, ...tiktokOrders].sort((a, b) =>
+      String(b.orderedAt || "").localeCompare(String(a.orderedAt || ""))
+    );
+  }, [initialOrders, tiktokOrders]);
   const [wallet] = useState(initialWallet);
   const [leaderboard] = useState(initialLeaderboard || []);
   const [myRank] = useState(initialMyRank || null);
@@ -1673,7 +1712,7 @@ export default function DashboardClient({
                 <div className="sm:hidden flex flex-col gap-3 p-3">
                   {pagedOrders.map((order, i) => {
                     const meta = statusMeta(order.status);
-                    const { gross, afterTax, final80 } = commissionBreakdown(order.commission, order.orderedAt);
+                    const { gross, afterTax, final80 } = commissionBreakdownForOrder(order);
                     const orderNumber = String(
                       orderOriginalNumber.get(order.id) || (orderPage - 1) * PAGE_SIZE + i + 1
                     ).padStart(2, "0");
@@ -1684,6 +1723,16 @@ export default function DashboardClient({
                             <p className="text-sm font-bold truncate">
                               {orderNumber}.🛍️ {truncateChars(order.productName, 60)}
                             </p>
+                            <span
+                              className="inline-block mt-1 text-[10px] font-bold px-1.5 py-0.5 rounded"
+                              style={
+                                order.platform === "tiktok"
+                                  ? { background: "rgba(0,0,0,0.06)", color: "#111111" }
+                                  : { background: "rgba(238,77,45,0.12)", color: "#ee4d2d" }
+                              }
+                            >
+                              {order.platform === "tiktok" ? "TikTok" : "Shopee"}
+                            </span>
                             {order.id && (
                               <div className="inline-flex items-center gap-1.5 mt-1 border border-border rounded-md bg-surface px-2 py-1">
                                 <p className="font-mono-num text-xs text-muted">{order.id}</p>
@@ -1766,7 +1815,7 @@ export default function DashboardClient({
                     <tbody>
                       {pagedOrders.map((order, i) => {
                         const meta = statusMeta(order.status);
-                        const { gross, afterTax, final80 } = commissionBreakdown(order.commission, order.orderedAt);
+                        const { gross, afterTax, final80 } = commissionBreakdownForOrder(order);
                         const orderNumber = String(
                           orderOriginalNumber.get(order.id) || (orderPage - 1) * PAGE_SIZE + i + 1
                         ).padStart(2, "0");
@@ -1780,6 +1829,16 @@ export default function DashboardClient({
                             <td className="px-4 py-3.5">
                               <span className="truncate max-w-[280px] inline-block align-top font-bold">
                                 {orderNumber}.🛍️ {truncateChars(order.productName, 60)}
+                              </span>
+                              <span
+                                className="ml-2 inline-block text-[10px] font-bold px-1.5 py-0.5 rounded align-top"
+                                style={
+                                  order.platform === "tiktok"
+                                    ? { background: "rgba(0,0,0,0.06)", color: "#111111" }
+                                    : { background: "rgba(238,77,45,0.12)", color: "#ee4d2d" }
+                                }
+                              >
+                                {order.platform === "tiktok" ? "TikTok" : "Shopee"}
                               </span>
                             </td>
                             <td className="px-4 py-3.5 text-right font-mono-num font-extrabold" style={{ color: AMOUNT_COLORS.gross.solid }}>
