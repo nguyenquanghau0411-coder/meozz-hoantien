@@ -262,7 +262,13 @@ function CtaStepTracker() {
               >
                 <step.Icon className="w-5 h-5 sm:w-6 sm:h-6" />
               </span>
-              <span className="step-tracker-label">{step.label}</span>
+              <span
+                className={`step-tracker-label${
+                  step.key === "cashback" ? " step-tracker-label-final" : ""
+                }`}
+              >
+                {step.label}
+              </span>
             </div>
           ))}
         </div>
@@ -1723,16 +1729,6 @@ export default function DashboardClient({
                             <p className="text-sm font-bold truncate">
                               {orderNumber}.🛍️ {truncateChars(order.productName, 60)}
                             </p>
-                            <span
-                              className="inline-block mt-1 text-[10px] font-bold px-1.5 py-0.5 rounded"
-                              style={
-                                order.platform === "tiktok"
-                                  ? { background: "rgba(0,0,0,0.06)", color: "#111111" }
-                                  : { background: "rgba(238,77,45,0.12)", color: "#ee4d2d" }
-                              }
-                            >
-                              {order.platform === "tiktok" ? "TikTok" : "Shopee"}
-                            </span>
                             {order.id && (
                               <div className="inline-flex items-center gap-1.5 mt-1 border border-border rounded-md bg-surface px-2 py-1">
                                 <p className="font-mono-num text-xs text-muted">{order.id}</p>
@@ -1764,6 +1760,16 @@ export default function DashboardClient({
                             <p className="text-[11px] text-muted">Ngày đặt</p>
                             <p className="font-mono-num text-sm">{formatDate(order.orderedAt)}</p>
                           </div>
+                          <span
+                            className="self-center shrink-0 text-[10px] font-bold px-2 py-0.5 rounded"
+                            style={
+                              order.platform === "tiktok"
+                                ? { background: "rgba(0,0,0,0.06)", color: "#111111" }
+                                : { background: "rgba(238,77,45,0.12)", color: "#ee4d2d" }
+                            }
+                          >
+                            {order.platform === "tiktok" ? "TikTok" : "Shopee"}
+                          </span>
                           <div className="text-right">
                             <p className="text-[11px] text-muted">Ngày hoàn thành</p>
                             <p className="font-mono-num text-sm">{formatDate(order.completedAt)}</p>
@@ -1809,6 +1815,7 @@ export default function DashboardClient({
                         <th className="text-right font-bold px-4 py-3">Hoa hồng thực nhận</th>
                         <th className="text-left font-bold px-4 py-3">Trạng thái</th>
                         <th className="text-right font-bold px-4 py-3">Ngày đặt</th>
+                        <th className="text-center font-bold px-4 py-3">Sàn</th>
                         <th className="text-right font-bold px-7 py-3">Ngày hoàn thành</th>
                       </tr>
                     </thead>
@@ -1830,16 +1837,6 @@ export default function DashboardClient({
                               <span className="truncate max-w-[280px] inline-block align-top font-bold">
                                 {orderNumber}.🛍️ {truncateChars(order.productName, 60)}
                               </span>
-                              <span
-                                className="ml-2 inline-block text-[10px] font-bold px-1.5 py-0.5 rounded align-top"
-                                style={
-                                  order.platform === "tiktok"
-                                    ? { background: "rgba(0,0,0,0.06)", color: "#111111" }
-                                    : { background: "rgba(238,77,45,0.12)", color: "#ee4d2d" }
-                                }
-                              >
-                                {order.platform === "tiktok" ? "TikTok" : "Shopee"}
-                              </span>
                             </td>
                             <td className="px-4 py-3.5 text-right font-mono-num font-extrabold" style={{ color: AMOUNT_COLORS.gross.solid }}>
                               {formatVnd(gross)}
@@ -1860,6 +1857,18 @@ export default function DashboardClient({
                             </td>
                             <td className="px-4 py-3.5 text-right text-muted text-xs">
                               {formatDate(order.orderedAt)}
+                            </td>
+                            <td className="px-4 py-3.5 text-center">
+                              <span
+                                className="inline-block text-[10px] font-bold px-2 py-0.5 rounded"
+                                style={
+                                  order.platform === "tiktok"
+                                    ? { background: "rgba(0,0,0,0.06)", color: "#111111" }
+                                    : { background: "rgba(238,77,45,0.12)", color: "#ee4d2d" }
+                                }
+                              >
+                                {order.platform === "tiktok" ? "TikTok" : "Shopee"}
+                              </span>
                             </td>
                             <td className="px-7 py-3.5 text-right text-muted text-xs">
                               {formatDate(order.completedAt)}
