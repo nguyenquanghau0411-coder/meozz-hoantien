@@ -197,7 +197,8 @@ body {
   box-shadow: 0 0 0 2px #fff, 0 2px 8px rgba(224, 96, 156, 0.25);
   flex-shrink: 0;
 }
-.brand-badge img {
+.brand-badge img,
+.brand-badge svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -435,7 +436,7 @@ body {
   border-radius: 999px;
   background: #1b2745;
   border: 2.5px solid #d4af37;
-  color: #eccc72;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -443,13 +444,13 @@ body {
 }
 .step-tracker-circle-final {
   background: #d4af37;
-  color: #101627;
+  color: #ffffff;
   box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.18), 0 4px 14px rgba(212, 175, 55, 0.4);
 }
 .step-tracker-label {
   font-size: 11.5px;
   font-weight: 800;
-  color: #eccc72;
+  color: #ffffff;
   text-align: center;
   white-space: nowrap;
 }
