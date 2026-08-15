@@ -407,8 +407,8 @@ body {
    Hiển thị trước khi tạo link, tự ẩn sau khi tạo link thành công.
    ───────────────────────────────────────────────────────────── */
 .step-tracker-frame {
-  background: linear-gradient(180deg, #131b30, #0e1526);
-  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  background: linear-gradient(180deg, #1e3a72, #14294f);
+  border: 1.5px solid rgba(94, 148, 246, 0.4);
   border-radius: 18px;
   padding: 20px 14px 14px;
 }
