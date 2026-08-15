@@ -23,7 +23,7 @@ function classifyStatus(trangThai) {
 
 // Bảng màu dùng chung cho bộ lọc đơn hàng + huy hiệu trạng thái từng đơn.
 const STATUS_COLORS = {
-  purple: { solid: "#d4af37", soft: "rgba(212,175,55,0.16)" },
+  purple: { solid: "#2f6fed", soft: "rgba(47,111,237,0.16)" },
   green: { solid: "#22c55e", soft: "rgba(34,197,94,0.14)" },
   yellow: { solid: "#eab308", soft: "rgba(234,179,8,0.16)" },
   red: { solid: "#ef4444", soft: "rgba(239,68,68,0.14)" },
@@ -39,7 +39,7 @@ function statusMeta(trangThai) {
 // Bộ lọc trạng thái đơn hàng hiển thị phía trên danh sách (Tất cả / Hoàn
 // thành / Chờ xử lý / Đã hủy), mỗi nút giữ đúng tông màu của trạng thái đó.
 const STATUS_FILTERS = [
-  { key: "all", label: "Tất cả", solid: "#d4af37", soft: STATUS_COLORS.purple.soft },
+  { key: "all", label: "Tất cả", solid: "#2f6fed", soft: STATUS_COLORS.purple.soft },
   { key: "completed", label: "Hoàn thành", solid: "#22c55e", soft: STATUS_COLORS.green.soft },
   { key: "pending", label: "Chờ xử lý", solid: "#eab308", soft: STATUS_COLORS.yellow.soft },
   { key: "cancelled", label: "Đã hủy", solid: "#ef4444", soft: STATUS_COLORS.red.soft },
@@ -50,9 +50,9 @@ const STATUS_FILTERS = [
 // Hoa hồng: đỏ san hô, Sau thuế: tím, Hoa hồng thực nhận: xanh lá sáng (theo ảnh mẫu).
 // Khung (border) của cả 3 ô dùng chung 1 màu tím nhạt theo tông nền của app.
 const AMOUNT_COLORS = {
-  gross: { solid: "#e0524f", border: "rgba(212,175,55,0.35)", soft: "rgba(212,175,55,0.06)" },
-  afterTax: { solid: "#d4af37", border: "rgba(212,175,55,0.35)", soft: "rgba(212,175,55,0.06)" },
-  final80: { solid: "#0ecb81", border: "rgba(212,175,55,0.35)", soft: "rgba(212,175,55,0.06)" },
+  gross: { solid: "#e0524f", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
+  afterTax: { solid: "#2f6fed", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
+  final80: { solid: "#0ecb81", border: "rgba(47,111,237,0.35)", soft: "rgba(47,111,237,0.06)" },
 };
 
 // Màu xanh lá cây sáng dùng chung cho số tiền "Hoa hồng ước tính" ở mọi nơi.
@@ -170,11 +170,11 @@ function ImportantNotice({ expanded, onToggle }) {
         className={expanded ? "notice-box-header cursor-pointer" : "notice-box-header-plain cursor-pointer"}
       >
         <span className="inline-flex items-center gap-1.5">
-          <span className="text-[12.5px] sm:text-sm font-bold not-italic text-[#eccc72]">
+          <span className="text-[12.5px] sm:text-sm font-bold not-italic text-[#b45309]">
             ⚠️ Lưu ý quan trọng để được hoàn tiền
           </span>
           <ChevronDownIcon
-            className={`w-3.5 h-3.5 text-[#eccc72] shrink-0 transition-transform ${
+            className={`w-3.5 h-3.5 text-[#b45309] shrink-0 transition-transform ${
               expanded ? "rotate-180" : ""
             }`}
           />
@@ -182,11 +182,11 @@ function ImportantNotice({ expanded, onToggle }) {
       </button>
       {expanded && (
         <div className="notice-box-body">
-          <p className="text-[13px] font-bold not-italic text-[#eccc72]">1. Xóa sản phẩm này khỏi giỏ hàng (nếu có) ✅</p>
-          <p className="text-[13px] font-bold not-italic text-[#eccc72]">2. Bấm link bỏ giỏ hoặc mua ngay ✅</p>
-          <p className="text-[13px] font-bold not-italic text-[#eccc72]">3. Thao tác chậm lại để Shopee ghi nhận đơn ✅</p>
-          <p className="text-[13px] font-bold not-italic text-[#eccc72]">4. Không xem live trước hoặc sau khi bấm link ✅</p>
-          <p className="text-[13px] font-bold not-italic text-[#eccc72]">
+          <p className="text-[13px] font-bold not-italic text-[#b45309]">1. Xóa sản phẩm này khỏi giỏ hàng (nếu có) ✅</p>
+          <p className="text-[13px] font-bold not-italic text-[#b45309]">2. Bấm link bỏ giỏ hoặc mua ngay ✅</p>
+          <p className="text-[13px] font-bold not-italic text-[#b45309]">3. Thao tác chậm lại để Shopee ghi nhận đơn ✅</p>
+          <p className="text-[13px] font-bold not-italic text-[#b45309]">4. Không xem live trước hoặc sau khi bấm link ✅</p>
+          <p className="text-[13px] font-bold not-italic text-[#b45309]">
             5. Không bấm vào link mã giảm giá của người khác sau khi bấm link ✅
           </p>
         </div>
@@ -335,13 +335,13 @@ const TABS = [
 // Tên hạng theo thứ tự giảm dần cho tab BXH — top 5 có tên riêng, từ hạng 6
 // trở đi dùng chung 1 tên "Thân Thiết" (không lộ sub_id/danh tính cho ai).
 const RANK_TIERS = [
-  { rank: 1, name: "Kim Cương", emoji: "💎", color: "#5eaefb", glow: "rgba(56,189,248,0.35)" },
+  { rank: 1, name: "Kim Cương", emoji: "💎", color: "#6f9df6", glow: "rgba(56,189,248,0.35)" },
   { rank: 2, name: "Bạch Kim", emoji: "🏆", color: "#5eead4", glow: "rgba(94,234,212,0.35)" },
   { rank: 3, name: "Vàng", emoji: "🥇", color: "#eab308", glow: "rgba(234,179,8,0.35)" },
   { rank: 4, name: "Bạc", emoji: "🥈", color: "#9ca3af", glow: "rgba(156,163,175,0.35)" },
   { rank: 5, name: "Đồng", emoji: "🥉", color: "#c2703d", glow: "rgba(194,112,61,0.35)" },
 ];
-const DEFAULT_TIER = { name: "Thân Thiết", emoji: "💗", color: "#d4af37", glow: "rgba(212,175,55,0.25)" };
+const DEFAULT_TIER = { name: "Thân Thiết", emoji: "💗", color: "#2f6fed", glow: "rgba(47,111,237,0.25)" };
 
 function rankTier(rank) {
   return RANK_TIERS.find((t) => t.rank === rank) || DEFAULT_TIER;
@@ -1039,8 +1039,8 @@ export default function DashboardClient({
                   onClick={() => handleCreateModeChange("single")}
                   className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border-2 transition-all cursor-pointer ${
                     createMode === "single"
-                      ? "bg-[#3a2e12] border-[#c9973f] text-[#f0c674] shadow-sm scale-[1.03]"
-                      : "bg-[#1f1a10] border-[#4a3a1c] text-[#d9b46a] hover:brightness-95"
+                      ? "bg-[#ffe8d1] border-[#b56a12] text-[#b56a12] shadow-sm scale-[1.03]"
+                      : "bg-[#fff6ec] border-[#ffe3c2] text-[#c98a3f] hover:brightness-95"
                   }`}
                 >
                   🎀 Tạo 1 link
@@ -1057,8 +1057,8 @@ export default function DashboardClient({
                   onClick={() => handleCreateModeChange("multi")}
                   className={`px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border-2 transition-all cursor-pointer ${
                     createMode === "multi"
-                      ? "bg-[#c0392b] border-[#e05f4f] text-white shadow-sm scale-[1.03]"
-                      : "bg-[#2a1414] border-[#5a2626] text-[#e88686] hover:brightness-95"
+                      ? "bg-[#ff8383] border-[#e94f4f] text-white shadow-sm scale-[1.03]"
+                      : "bg-[#ffe4e4] border-[#ffc4c4] text-[#c34848] hover:brightness-95"
                   }`}
                 >
                   🎀 Tạo nhiều link
@@ -1118,7 +1118,7 @@ export default function DashboardClient({
                   <button
                     type="submit"
                     disabled={converting}
-                    className={`flex-1 sm:flex-none sm:w-auto bg-[#d4af37] hover:bg-[#eccc72] text-white font-bold rounded-lg px-5 py-2.5 text-sm shadow-md shadow-[#d4af37]/40 transition-all disabled:opacity-60 disabled:animate-none cursor-pointer ${
+                    className={`flex-1 sm:flex-none sm:w-auto bg-[#2f6fed] hover:bg-[#6f9df6] text-white font-bold rounded-lg px-5 py-2.5 text-sm shadow-md shadow-[#2f6fed]/40 transition-all disabled:opacity-60 disabled:animate-none cursor-pointer ${
                       batchResults.length === 0 ? "animate-pulse" : "opacity-30"
                     }`}
                   >
@@ -1134,7 +1134,7 @@ export default function DashboardClient({
                       onClick={handleClearUrl}
                       aria-label="Xóa link"
                       title="Xóa"
-                      className="inline-flex items-center justify-center gap-1.5 bg-[#1e2438] hover:bg-[#283152] text-[#aab2cc] font-semibold rounded-lg px-3.5 py-2.5 text-sm transition-colors cursor-pointer shrink-0"
+                      className="inline-flex items-center justify-center gap-1.5 bg-[#eceef1] hover:bg-[#dfe2e6] text-[#5b616b] font-semibold rounded-lg px-3.5 py-2.5 text-sm transition-colors cursor-pointer shrink-0"
                     >
                       <CloseIcon className="w-3.5 h-3.5" />
                       Xóa
@@ -1162,8 +1162,8 @@ export default function DashboardClient({
             {batchSuccessCount > 0 && (
               <div className="mt-4 flex justify-center">
                 <div className="success-glow-green inline-flex items-center gap-2 rounded-xl border border-[#22c55e]/40 px-4 py-2.5">
-                  <CheckIcon className="w-4 h-4 text-[#4ade80] shrink-0" />
-                  <p className="text-sm font-bold text-[#4ade80] whitespace-nowrap">
+                  <CheckIcon className="w-4 h-4 text-[#16a34a] shrink-0" />
+                  <p className="text-sm font-bold text-[#16a34a] whitespace-nowrap">
                     {batchTotalCount <= 1
                       ? "Đã tạo link hoàn tiền thành công"
                       : `Đã tạo ${batchSuccessCount}/${batchTotalCount} link hoàn tiền thành công`}
@@ -1261,7 +1261,7 @@ export default function DashboardClient({
                           href={item.convertedUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn-blink-green flex-[2.2] inline-flex items-center justify-center text-center bg-[#22c55e] hover:bg-[#4ade80] text-white text-base sm:text-lg font-extrabold rounded-lg px-3.5 py-3 shadow-md shadow-[#22c55e]/40 transition-all active:scale-[0.98] cursor-pointer"
+                          className="btn-blink-green flex-[2.2] inline-flex items-center justify-center text-center bg-[#22c55e] hover:bg-[#16a34a] text-white text-base sm:text-lg font-extrabold rounded-lg px-3.5 py-3 shadow-md shadow-[#22c55e]/40 transition-all active:scale-[0.98] cursor-pointer"
                         >
                           🛍️ Mua Ngay
                         </a>
@@ -1303,14 +1303,14 @@ export default function DashboardClient({
                   : "w-full flex justify-center cursor-pointer"
               }
             >
-              <span className={`flex items-center justify-center gap-1.5 ${historyOpen ? "mb-3" : "bg-panel border border-[#d4af37]/40 rounded-full px-4 py-2 shadow-sm shadow-black/5"}`}>
+              <span className={`flex items-center justify-center gap-1.5 ${historyOpen ? "mb-3" : "bg-panel border border-[#2f6fed]/40 rounded-full px-4 py-2 shadow-sm shadow-black/5"}`}>
                 <span
                   className="font-display font-bold text-lg text-center"
-                  style={{ color: "#d4af37" }}
+                  style={{ color: "#2f6fed" }}
                 >
                   Lịch sử tạo link
                 </span>
-                <span style={{ color: "#d4af37" }}>
+                <span style={{ color: "#2f6fed" }}>
                   <ChevronDownIcon
                     className={`w-4 h-4 shrink-0 transition-transform ${historyOpen ? "rotate-180" : ""}`}
                   />
@@ -1327,7 +1327,7 @@ export default function DashboardClient({
                   }}
                   className={`flex-1 px-4 py-2 rounded-full text-sm font-bold text-center transition-all cursor-pointer border-2 ${
                     historyTab === "all"
-                      ? "bg-[#2563eb] border-[#5eaefb] text-white shadow-sm"
+                      ? "bg-[#2f6fed] border-[#6f9df6] text-white shadow-sm"
                       : "bg-surface border-border text-muted hover:text-cream"
                   }`}
                 >
@@ -1342,8 +1342,8 @@ export default function DashboardClient({
                   }}
                   className={`flex-1 px-4 py-2 rounded-full text-sm font-bold text-center transition-all cursor-pointer border-2 ${
                     historyTab === "favorite"
-                      ? "bg-gradient-to-r from-[#c0392b] to-[#e88686] border-[#c0392b] text-white shadow-md shadow-[#c0392b]/40"
-                      : "bg-[#2a1414] border-[#5a2626] text-[#e88686] hover:brightness-95"
+                      ? "bg-gradient-to-r from-[#ff8383] to-[#c34848] border-[#ff8383] text-white shadow-md shadow-[#ff8383]/40"
+                      : "bg-[#ffe4e4] border-[#ffc4c4] text-[#c34848] hover:brightness-95"
                   }`}
                 >
                   ❤️ Yêu thích ({historyFavoriteCount})
@@ -1426,7 +1426,7 @@ export default function DashboardClient({
                             href={item.convertedUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 text-center bg-[#22c55e] hover:bg-[#4ade80] text-white text-xs font-bold rounded-lg px-3 py-2.5 shadow-sm shadow-[#22c55e]/40 transition-all active:scale-[0.98] cursor-pointer"
+                            className="flex-1 text-center bg-[#22c55e] hover:bg-[#16a34a] text-white text-xs font-bold rounded-lg px-3 py-2.5 shadow-sm shadow-[#22c55e]/40 transition-all active:scale-[0.98] cursor-pointer"
                           >
                             🛍️ Mua Ngay
                           </a>
@@ -1495,7 +1495,7 @@ export default function DashboardClient({
                                   href={item.convertedUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-center bg-[#22c55e] hover:bg-[#4ade80] text-white text-xs font-bold rounded-lg px-3 py-2 shadow-sm shadow-[#22c55e]/40 transition-all active:scale-[0.98] cursor-pointer whitespace-nowrap"
+                                  className="text-center bg-[#22c55e] hover:bg-[#16a34a] text-white text-xs font-bold rounded-lg px-3 py-2 shadow-sm shadow-[#22c55e]/40 transition-all active:scale-[0.98] cursor-pointer whitespace-nowrap"
                                 >
                                   🛍️ Mua Ngay
                                 </a>
@@ -1601,21 +1601,21 @@ export default function DashboardClient({
                 khi khách cuộn xuống xem đơn. Bộ lọc trạng thái nằm ngay dưới, cùng
                 cố định theo. */}
             <div className="sticky top-16 z-30 mb-3 flex flex-col gap-2 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 sticky-blur-bg">
-              <div className="flex items-stretch bg-[#0f1b30] border border-[#2c4a72] rounded-full overflow-hidden shadow-md shadow-black/5">
+              <div className="flex items-stretch bg-[#e8f4fc] border border-[#bfe0f4] rounded-full overflow-hidden shadow-md shadow-black/5">
                 <div className="flex items-center gap-1.5 px-4 py-2 shrink-0">
-                  <span className="font-display font-extrabold text-base text-[#7db8ea] tabular-nums">
+                  <span className="font-display font-extrabold text-base text-[#2f6f95] tabular-nums">
                     {ordersTotalCount}
                   </span>
-                  <span className="text-xs font-semibold text-[#7db8ea]">đơn</span>
+                  <span className="text-xs font-semibold text-[#2f6f95]">đơn</span>
                 </div>
-                <div className="w-px bg-[#2c4a72] my-2" />
+                <div className="w-px bg-[#bfe0f4] my-2" />
                 <div className="relative flex-1 flex items-center">
                   <input
                     type="text"
                     value={orderSearch}
                     onChange={(e) => handleSearchChange(e.target.value)}
                     placeholder="Nhập mã đơn hoặc tên sản phẩm..."
-                    className="w-full bg-transparent pl-4 pr-16 py-2 text-base sm:text-sm outline-none placeholder:text-[#7db8ea]/60 text-ink"
+                    className="w-full bg-transparent pl-4 pr-16 py-2 text-base sm:text-sm outline-none placeholder:text-[#2f6f95]/60 text-ink"
                   />
                   {orderSearch && (
                     <button
@@ -1623,14 +1623,14 @@ export default function DashboardClient({
                       onClick={() => handleSearchChange("")}
                       aria-label="Xóa tìm kiếm"
                       title="Xóa tìm kiếm"
-                      className="absolute right-9 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-6 h-6 rounded-full text-[#7db8ea] hover:bg-[#1c3252] active:scale-90 transition-all cursor-pointer"
+                      className="absolute right-9 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-6 h-6 rounded-full text-[#2f6f95] hover:bg-[#d3ebf9] active:scale-90 transition-all cursor-pointer"
                     >
                       <CloseIcon className="w-3.5 h-3.5" />
                     </button>
                   )}
                   <span
                     aria-hidden="true"
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-6 h-6 text-[#7db8ea]"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-6 h-6 text-[#2f6f95]"
                   >
                     <SearchIcon className="w-4 h-4" />
                   </span>
@@ -1868,7 +1868,7 @@ export default function DashboardClient({
           <div className="ticket-notch bg-panel border border-border rounded-2xl overflow-hidden max-w-md">
             <div className="p-6 sm:p-7">
               <p className="text-xs text-muted uppercase tracking-widest mb-2">Có sẵn để rút</p>
-              <div className="inline-block border border-[#2f9e63] bg-[#0f2a1c] rounded-xl px-4 py-2.5">
+              <div className="inline-block border border-[#8fe0b0] bg-[#e9fbf1] rounded-xl px-4 py-2.5">
                 <p className="font-display font-bold text-4xl text-[#22c55e] tabular-nums">
                   {wallet ? formatVnd(wallet.coTheRutHien) : "—"}
                 </p>
@@ -1888,7 +1888,7 @@ export default function DashboardClient({
                     <button
                       type="button"
                       onClick={handleWithdrawRequest}
-                      className="bg-[#22c55e] hover:bg-[#4ade80] text-white font-semibold rounded-lg px-4 py-2.5 text-sm transition-colors cursor-pointer shrink-0"
+                      className="bg-[#22c55e] hover:bg-[#16a34a] text-white font-semibold rounded-lg px-4 py-2.5 text-sm transition-colors cursor-pointer shrink-0"
                     >
                       Rút ngay
                     </button>
@@ -1946,7 +1946,7 @@ export default function DashboardClient({
                 <div className="ticket-dashed" />
                 <div className="px-6 sm:px-7 pt-4">
                   <p
-                    className="inline-flex items-center justify-center w-full bg-[#332a0d] border border-[#d4af37] text-[#eccc72] font-bold rounded-full px-3 py-1.5 text-center whitespace-nowrap overflow-hidden"
+                    className="inline-flex items-center justify-center w-full bg-[#fff4b8] border border-[#f5c944] text-[#8a6412] font-bold rounded-full px-3 py-1.5 text-center whitespace-nowrap overflow-hidden"
                     style={{ fontSize: "clamp(8px, 2.6vw, 12px)" }}
                   >
                     💡Hoa hồng ở &gt;Đã hoàn thành&lt; sẽ chuyển qua &gt;Có sẵn để rút&lt; sau 7 ngày
@@ -1963,7 +1963,7 @@ export default function DashboardClient({
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟣 Đang chờ xử lý</p>
-                    <p className="font-mono-num text-lg font-bold text-[#d4af37]">
+                    <p className="font-mono-num text-lg font-bold text-[#2f6fed]">
                       {formatVnd(wallet.dangCho)}
                     </p>
                   </div>
@@ -2056,7 +2056,7 @@ export default function DashboardClient({
                     <div
                       key={entry.rank}
                       className={`flex items-center gap-3 rounded-xl border px-3.5 py-2.5 ${
-                        entry.isMe ? "border-highlight bg-[#201a3a]" : "border-border"
+                        entry.isMe ? "border-highlight bg-[#eef3fb]" : "border-border"
                       }`}
                     >
                       <span className="w-8 text-center font-mono-num text-xs font-bold text-muted shrink-0">
@@ -2208,7 +2208,7 @@ export default function DashboardClient({
           }`}
         >
           <div className="bg-panel border border-[#22c55e]/30 rounded-2xl shadow-2xl shadow-black/20 px-6 py-5 flex flex-col items-center gap-2 max-w-[280px]">
-            <span className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#22c55e]/15 text-[#4ade80]">
+            <span className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#22c55e]/15 text-[#16a34a]">
               <CheckIcon className="w-6 h-6" />
             </span>
             <p className="text-sm font-bold text-ink text-center">{toastText}</p>

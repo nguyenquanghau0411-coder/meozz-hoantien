@@ -34,18 +34,18 @@
 }
 
 html {
-  background: #05070f;
+  background: #ffffff;
   overscroll-behavior-y: none;
 }
 
 body {
-  background: #05070f;
+  background: #ffffff;
   color: var(--cream);
   overscroll-behavior-y: none;
   background-image:
-    radial-gradient(ellipse 900px 520px at 100% -8%, rgba(212, 175, 55, 0.16), transparent 60%),
-    radial-gradient(ellipse 700px 460px at -5% 105%, rgba(59, 130, 246, 0.14), transparent 55%),
-    linear-gradient(160deg, #05070f 0%, #0b1224 45%, #121c36 100%);
+    radial-gradient(ellipse 900px 520px at 100% -8%, rgba(47, 111, 237, 0.10), transparent 60%),
+    radial-gradient(ellipse 700px 460px at -5% 105%, rgba(47, 111, 237, 0.08), transparent 55%),
+    linear-gradient(160deg, #ffffff 0%, #f3f7fd 45%, #e8f0fc 100%);
   background-attachment: fixed;
 }
 
@@ -106,50 +106,50 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Bảng màu Xanh Đen Sang Trọng (Navy & Gold) — dùng chung cho cả
+   Bảng màu Xanh Dương Dịu Mắt trên nền Trắng — dùng chung cho cả
    trang đăng nhập lẫn dashboard. Đây là bảng màu duy nhất của app,
-   không còn bộ chọn 7 màu. Nền tối xanh đen + điểm nhấn vàng kim,
-   có họa tiết hình thoi tĩnh (không nhấp nháy) để tạo chiều sâu.
+   không còn bộ chọn 7 màu. Nền sáng trắng/xanh nhạt, điểm nhấn xanh
+   dương đậm, có họa tiết hình thoi rất mờ (tĩnh, không nhấp nháy).
    ───────────────────────────────────────────────────────────── */
 .login-pink {
-  --ink: #eef2fb;
-  --surface: #0e1526;
-  --panel: #131b30;
-  --panel-2: #1b2745;
-  --border: #2c3a5e;
-  --gold: #d4af37;
-  --gold-soft: #eccc72;
-  --mint: #5eead4;
-  --cream: #eef2fb;
-  --muted: #8896b8;
-  --danger: #ff6b6b;
+  --ink: #17284a;
+  --surface: #ffffff;
+  --panel: #ffffff;
+  --panel-2: #eef3fb;
+  --border: #d9e3f2;
+  --gold: #2f6fed;
+  --gold-soft: #6f9df6;
+  --mint: #22b8b0;
+  --cream: #17284a;
+  --muted: #6b7a99;
+  --danger: #e0524f;
   --highlight: var(--gold);
 
-  /* Nền xanh đen sâu, sang trọng, có ánh vàng kim + ánh xanh lam nhẹ. */
-  --bg-grad-1: #05070f;
-  --bg-grad-2: #0b1224;
-  --bg-grad-3: #121c36;
+  /* Nền trắng sáng, dịu mắt, ánh xanh dương nhẹ ở góc. */
+  --bg-grad-1: #ffffff;
+  --bg-grad-2: #f3f7fd;
+  --bg-grad-3: #e8f0fc;
 
   background-color: var(--bg-grad-1);
   background-image:
-    radial-gradient(ellipse 900px 560px at 100% -8%, rgba(212, 175, 55, 0.16), transparent 60%),
-    radial-gradient(ellipse 760px 520px at -8% 108%, rgba(59, 130, 246, 0.14), transparent 55%),
-    repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.05) 0px, rgba(212, 175, 55, 0.05) 1px, transparent 1px, transparent 34px),
-    repeating-linear-gradient(-45deg, rgba(212, 175, 55, 0.05) 0px, rgba(212, 175, 55, 0.05) 1px, transparent 1px, transparent 34px),
+    radial-gradient(ellipse 900px 560px at 100% -8%, rgba(47, 111, 237, 0.10), transparent 60%),
+    radial-gradient(ellipse 760px 520px at -8% 108%, rgba(47, 111, 237, 0.08), transparent 55%),
+    repeating-linear-gradient(45deg, rgba(23, 40, 74, 0.035) 0px, rgba(23, 40, 74, 0.035) 1px, transparent 1px, transparent 34px),
+    repeating-linear-gradient(-45deg, rgba(23, 40, 74, 0.035) 0px, rgba(23, 40, 74, 0.035) 1px, transparent 1px, transparent 34px),
     linear-gradient(160deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 45%, var(--bg-grad-3) 100%);
   background-attachment: fixed;
   color: var(--cream);
 }
 
 .login-pink .field-important {
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.10);
 }
 .login-pink .field-important:focus {
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.22);
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.20);
 }
 .login-pink .ticket-notch::before,
 .login-pink .ticket-notch::after {
-  background: #05070f;
+  background: #ffffff;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -205,15 +205,15 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Khung viền vàng kim tĩnh (không nhấp nháy/chạy sáng) — dùng cho
-   các tiêu đề/khối muốn nhấn mạnh, phong cách sang trọng, cố định.
+   Khung viền xanh dương tĩnh (không nhấp nháy/chạy sáng) — dùng cho
+   các tiêu đề/khối muốn nhấn mạnh, nền trắng, dịu mắt, cố định.
    ───────────────────────────────────────────────────────────── */
 .rainbow-frame {
   position: relative;
   padding: 2px;
   border-radius: 18px;
-  background: linear-gradient(120deg, #7a5a12, #eccc72, #d4af37, #f4e2a1, #d4af37, #7a5a12);
-  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.22);
+  background: linear-gradient(120deg, #1d4ed8, #6f9df6, #2f6fed, #a9c6fb, #2f6fed, #1d4ed8);
+  box-shadow: 0 4px 18px rgba(47, 111, 237, 0.16);
 }
 .rainbow-frame-inner {
   border-radius: 16px;
@@ -241,7 +241,7 @@ body {
   position: relative;
   padding: 2px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #d4af37, #5eead4);
+  background: linear-gradient(90deg, #2f6fed, #22b8b0);
 }
 .rainbow-cell-inner {
   border-radius: 8px;
@@ -265,12 +265,12 @@ body {
   position: relative;
   padding: 2px;
   border-radius: 18px;
-  background: linear-gradient(135deg, #d4af37 0%, #f4e2a1 50%, #d4af37 100%);
-  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.30);
+  background: linear-gradient(135deg, #2f6fed 0%, #a9c6fb 50%, #2f6fed 100%);
+  box-shadow: 0 8px 20px rgba(47, 111, 237, 0.22);
 }
 .vip-name-frame-inner {
   border-radius: 16px;
-  background: #0e1526;
+  background: #ffffff;
   height: 100%;
   width: 100%;
   padding: 0.7rem 1.35rem;
@@ -283,7 +283,7 @@ body {
   font-style: normal;
   font-weight: 700;
   letter-spacing: 0.01em;
-  color: #eccc72;
+  color: #1d4ed8;
 }
 .vip-name-input {
   font-family: var(--font-elegant), serif;
@@ -291,24 +291,24 @@ body {
   font-weight: 700;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
-  color: #eccc72;
+  border-bottom: 1px solid rgba(47, 111, 237, 0.4);
+  color: #1d4ed8;
   outline: none;
 }
 .vip-name-input:focus {
-  border-bottom-color: #eccc72;
+  border-bottom-color: #1d4ed8;
 }
 .vip-edit-btn-outside {
   width: 34px;
   height: 34px;
   border-radius: 999px;
   background: var(--panel);
-  color: #d4af37;
+  color: #2f6fed;
   border: 1.5px solid var(--border);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.18);
+  box-shadow: 0 2px 8px rgba(47, 111, 237, 0.15);
   transition: all 0.15s ease;
 }
 .vip-edit-btn-outside:hover {
@@ -320,17 +320,17 @@ body {
    viền màu tím nhạt thay vì viền xám đơn điệu, đẹp mắt hơn. */
 .product-card {
   border-radius: 18px;
-  border: 1.5px solid rgba(212, 175, 55, 0.28);
+  border: 1.5px solid rgba(47, 111, 237, 0.22);
   background: var(--surface);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 16px rgba(23, 40, 74, 0.08);
 }
 
 /* Khung chung bao ngoài danh sách nhiều sản phẩm khi tạo nhiều link cùng
    lúc — tách biệt trực quan với khối bên trên. */
 .product-list-frame {
   border-radius: 20px;
-  border: 1.5px solid rgba(212, 175, 55, 0.28);
-  background: linear-gradient(180deg, #121c36, #0e1526);
+  border: 1.5px solid rgba(47, 111, 237, 0.22);
+  background: linear-gradient(180deg, #f3f7fd, #ffffff);
   padding: 14px;
 }
 
@@ -350,7 +350,7 @@ body {
    cùng và khung tên khách hàng — để chữ/nội dung cuộn bên dưới không bị
    chồng lên, đồng thời không bị "trôi" mất khỏi màn hình. */
 .sticky-blur-bg {
-  background: rgba(10, 15, 28, 0.85);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -364,8 +364,8 @@ body {
 /* Dòng cảnh báo "⚠️ Lưu ý quan trọng để được hoàn tiền" — nền vàng nhạt sáng,
    không viền. Tiêu đề + 5 gạch đầu dòng nằm chung 1 khối (không tách ô). */
 .notice-box {
-  background: rgba(212, 175, 55, 0.12);
-  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  background: #fff8e1;
+  border: 1.5px solid #f5d576;
   border-radius: 14px;
   overflow: hidden;
 }

@@ -116,13 +116,13 @@ function CopyIcon({ className = "" }) {
 function CheckBadge() {
   return (
     <svg viewBox="0 0 100 100" className="w-24 h-24 mx-auto" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="46" fill="none" stroke="#2c3a5e" strokeWidth="6" />
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#d9e3f2" strokeWidth="6" />
       <circle
         cx="50"
         cy="50"
         r="46"
         fill="none"
-        stroke="#d4af37"
+        stroke="#2f6fed"
         strokeWidth="6"
         strokeLinecap="round"
         strokeDasharray="289"
@@ -132,7 +132,7 @@ function CheckBadge() {
       <path
         d="M30 52 L44 66 L72 36"
         fill="none"
-        stroke="#d4af37"
+        stroke="#2f6fed"
         strokeWidth="7"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -290,7 +290,7 @@ export default function LoginPage() {
                   Cách lấy My ID:
                 </p>
                 <p className="flex flex-wrap items-center gap-1.5">
-                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#d4af37] text-white text-[9px] font-bold shrink-0">1</span>
+                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#2f6fed] text-white text-[9px] font-bold shrink-0">1</span>
                   <span className="font-bold text-ink">Sao chép câu lệnh</span>
                   <span className="inline-flex items-center gap-1 font-mono-num font-bold bg-danger/15 text-danger px-1.5 py-0.5 rounded-md">
                     {MYID_COMMAND}
@@ -306,7 +306,7 @@ export default function LoginPage() {
                   {copied && <span className="text-highlight font-bold">Đã sao chép!</span>}
                 </p>
                 <p className="flex flex-wrap items-center gap-1.5">
-                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#eccc72] text-white text-[9px] font-bold shrink-0">2</span>
+                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#6f9df6] text-white text-[9px] font-bold shrink-0">2</span>
                   <span className="font-bold text-ink">Gửi vào nhóm để lấy My ID</span>
                   <a
                     href={ZALO_GROUP_LINK}
@@ -319,7 +319,7 @@ export default function LoginPage() {
                   </a>
                 </p>
                 <p className="flex flex-wrap items-center gap-1.5">
-                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#b8860b] text-white text-[9px] font-bold shrink-0">3</span>
+                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#1d4ed8] text-white text-[9px] font-bold shrink-0">3</span>
                   <span className="font-bold text-ink">Sao chép ID bot gửi cho bạn và điền vào ô My ID.</span>
                 </p>
               </div>
