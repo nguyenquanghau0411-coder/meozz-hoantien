@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DEFAULT_THEME } from "../../lib/theme";
 
-const ZALO_GROUP_LINK = "https://zalo.me/g/9z3rc8twl2d8oss7ttn3";
+const ZALO_GROUP_LINK = "https://zalo.me/g/udohxsw517msr8g6xec6";
 const MYID_COMMAND = "#My_ID";
 
 // Tên gợi nhớ chỉ lưu riêng trên từng điện thoại (localStorage), tách theo
@@ -87,6 +87,45 @@ function VietnamFlagIcon({ className = "" }) {
       <path
         d="M15 4.5 L16.76 9.14 L21.75 9.27 L17.82 12.32 L19.27 17.1 L15 14.32 L10.73 17.1 L12.18 12.32 L8.25 9.27 L13.24 9.14 Z"
         fill="#ffcd00"
+      />
+    </svg>
+  );
+}
+
+/* Bông hoa tulip (thiết kế gốc) — dùng làm avatar thương hiệu góc trên bên
+   phải thẻ đăng nhập, thay cho ảnh logo cũ. */
+function TulipBadgeIcon({ className = "" }) {
+  return (
+    <svg viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="tulipBg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#ffd9e8" />
+          <stop offset="100%" stopColor="#f0709e" />
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" fill="url(#tulipBg)" />
+      <path d="M50 58 Q50 70 50 82" stroke="#3f8a52" strokeWidth="4" fill="none" strokeLinecap="round" />
+      <path d="M50 66 Q30 64 24 74 Q40 78 50 70 Z" fill="#4cb15f" />
+      <path d="M50 72 Q68 70 76 80 Q58 84 50 76 Z" fill="#5cc06e" />
+      <path
+        d="M50 30 C38 30 33 42 35 54 C36 60 42 63 50 63 C58 63 64 60 65 54 C67 42 62 30 50 30 Z"
+        fill="#e0417c"
+      />
+      <path
+        d="M35 54 C28 50 26 40 32 30 C36 33 39 40 39 48 C39 51 37 53 35 54 Z"
+        fill="#ec6c99"
+      />
+      <path
+        d="M65 54 C72 50 74 40 68 30 C64 33 61 40 61 48 C61 51 63 53 65 54 Z"
+        fill="#ec6c99"
+      />
+      <path
+        d="M46 36 C44 42 44 50 46 56"
+        stroke="#ffd9e6"
+        strokeWidth="2.4"
+        fill="none"
+        strokeLinecap="round"
+        opacity="0.85"
       />
     </svg>
   );
@@ -254,7 +293,7 @@ export default function LoginPage() {
                 <VietnamFlagIcon className="w-full h-full" />
               </div>
               <div className="brand-badge" title="Meozz - Hoàn Tiền">
-                <img src="/brand/logo-shield.png" alt="Hoàn tiền mua hàng" />
+                <TulipBadgeIcon className="w-full h-full" />
               </div>
             </div>
 
