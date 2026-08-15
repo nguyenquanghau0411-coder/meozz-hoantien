@@ -1868,8 +1868,8 @@ export default function DashboardClient({
           <div className="ticket-notch bg-panel border border-border rounded-2xl overflow-hidden max-w-md">
             <div className="p-6 sm:p-7">
               <p className="text-xs text-muted uppercase tracking-widest mb-2">Có sẵn để rút</p>
-              <div className="inline-block border border-[#8fe0b0] bg-[#e9fbf1] rounded-xl px-4 py-2.5">
-                <p className="font-display font-bold text-4xl text-[#22c55e] tabular-nums">
+              <div className="inline-block border border-border bg-panel-2 rounded-xl px-4 py-2.5">
+                <p className="font-display font-bold text-4xl text-cream tabular-nums">
                   {wallet ? formatVnd(wallet.coTheRutHien) : "—"}
                 </p>
               </div>
@@ -1955,7 +1955,7 @@ export default function DashboardClient({
                 <div className="p-6 sm:p-7 pt-4 grid grid-cols-2 gap-4">
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟡 Tổng hoa hồng</p>
-                    <p className="font-mono-num text-lg font-bold text-[#eab308]">
+                    <p className="font-mono-num text-lg font-bold text-cream">
                       {formatVnd(
                         wallet.dangCho + wallet.hoanThanhChuaRut + wallet.coTheRutHien + wallet.daNhan
                       )}
@@ -1963,19 +1963,19 @@ export default function DashboardClient({
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟣 Đang chờ xử lý</p>
-                    <p className="font-mono-num text-lg font-bold text-[#2f6fed]">
+                    <p className="font-mono-num text-lg font-bold text-cream">
                       {formatVnd(wallet.dangCho)}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🟢 Đã hoàn thành</p>
-                    <p className="font-mono-num text-lg font-bold text-[#22c55e]">
+                    <p className="font-mono-num text-lg font-bold text-cream">
                       {formatVnd(wallet.hoanThanhChuaRut)}
                     </p>
                   </div>
                   <div className="border border-border rounded-xl px-3.5 py-3">
                     <p className="text-xs text-muted mb-1">🔴 Đã nhận</p>
-                    <p className="font-mono-num text-lg font-bold text-[#ef4444]">
+                    <p className="font-mono-num text-lg font-bold text-cream">
                       {formatVnd(wallet.daNhan)}
                     </p>
                   </div>
