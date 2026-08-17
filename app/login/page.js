@@ -1,8 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { DEFAULT_THEME } from "../../lib/theme";
+import {
+  isEmbeddedWebview,
+  detectHostAppName,
+  isAndroidUserAgent,
+  buildAndroidChromeIntentUrl,
+} from "../../lib/webview";
 
 const ZALO_GROUP_LINK = "https://zalo.me/g/udohxsw517msr8g6xec6";
 const MYID_COMMAND = "#My_ID";
@@ -194,7 +200,37 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [hostApp, setHostApp] = useState(""); // tên app đang chứa WebView (Zalo, Messenger...), rỗng nếu là trình duyệt thường
+  const [isAndroid, setIsAndroid] = useState(false);
   const theme = DEFAULT_THEME;
+
+  // Phát hiện trình duyệt "trong app" (Zalo/Messenger/Instagram/...) ngay khi
+  // vào trang — các WebView này đôi khi không lưu cookie đăng nhập bền vững,
+  // nên cần cảnh báo khách mở bằng trình duyệt thật NGAY TỪ ĐẦU thay vì để họ
+  // đăng nhập xong mới phát hiện bị đá ngược lại /login.
+  useEffect(() => {
+    const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
+    if (!isEmbeddedWebview(ua)) return;
+    // Chạy sau khi effect đã đăng ký xong để tránh cảnh báo cascading-render.
+    const id = setTimeout(() => {
+      setHostApp(detectHostAppName(ua));
+      setIsAndroid(isAndroidUserAgent(ua));
+    }, 0);
+    return () => clearTimeout(id);
+  }, []);
+
+  function openInExternalBrowser() {
+    const currentUrl = typeof window !== "undefined" ? window.location.href : "";
+    if (isAndroid) {
+      // Android: bật thẳng Chrome bằng intent://, khỏi cần khách tự bấm menu.
+      window.location.href = buildAndroidChromeIntentUrl(currentUrl);
+    } else {
+      // iOS/khác: không có cách ép mở Safari từ JS — mở tab mới là cách gần
+      // nhất có thể làm, phần còn lại (nếu vẫn ở trong WebView) cần khách tự
+      // bấm nút "..." > "Mở bằng trình duyệt" theo hướng dẫn hiển thị bên dưới.
+      window.open(currentUrl, "_blank", "noopener,noreferrer");
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -216,6 +252,22 @@ export default function LoginPage() {
       if (!res.ok) {
         setError(data.error || "Có lỗi xảy ra, vui lòng thử lại.");
         setLoading(false);
+        return;
+      }
+
+      // Xác minh cookie phiên đăng nhập THỰC SỰ đã được trình duyệt lưu trước
+      // khi chuyển trang. Nếu chuyển thẳng sang /dashboard mà cookie chưa lưu
+      // được (WebView chặn cookie), khách sẽ bị đá ngược lại /login mà không
+      // rõ vì sao — kiểm tra ở đây để báo lỗi rõ ràng thay vì "tự nhiên load
+      // lại trang".
+      const meRes = await fetch("/api/me", { cache: "no-store" });
+      if (!meRes.ok) {
+        setLoading(false);
+        setError(
+          hostApp
+            ? `Trình duyệt của ${hostApp} đang chặn lưu đăng nhập trên máy này. Vui lòng bấm nút "Mở bằng trình duyệt ngoài" bên dưới rồi đăng nhập lại.`
+            : "Trình duyệt này đang chặn lưu đăng nhập (cookie). Vui lòng tắt chế độ duyệt ẩn danh, bật lại cookie (hoặc tắt tiện ích chặn cookie) rồi thử lại."
+        );
         return;
       }
 
@@ -296,6 +348,35 @@ export default function LoginPage() {
                 <TulipBadgeIcon className="w-full h-full" />
               </div>
             </div>
+
+            {/* Cảnh báo trình duyệt trong app (Zalo/Messenger/...) — hiển thị
+                NGAY khi vào trang, trước khi khách kịp đăng nhập, vì các
+                WebView này có thể không lưu được đăng nhập trên máy. */}
+            {hostApp && (
+              <div className="mb-5 rounded-xl border-2 border-danger/40 bg-danger/10 px-3.5 py-3 text-[12px] leading-snug space-y-2">
+                <p className="font-bold text-danger flex items-center gap-1.5">
+                  ⚠️ Bạn đang mở bằng trình duyệt của {hostApp}
+                </p>
+                <p className="text-ink">
+                  Trình duyệt này đôi khi không lưu được đăng nhập, khiến bạn nhập My ID xong
+                  bấm Đăng nhập nhưng lại quay về trang này. Hãy mở bằng trình duyệt ngoài
+                  (Safari/Chrome/Cốc Cốc...) rồi đăng nhập lại để chắc chắn vào được web.
+                </p>
+                <button
+                  type="button"
+                  onClick={openInExternalBrowser}
+                  className="w-full bg-danger hover:brightness-95 text-white font-bold rounded-lg py-2 active:scale-[0.98] transition-all cursor-pointer"
+                >
+                  🌐 Mở bằng trình duyệt ngoài
+                </button>
+                {!isAndroid && (
+                  <p className="text-muted">
+                    Nếu bấm nút trên vẫn không thoát được: bấm biểu tượng &quot;•••&quot; hoặc
+                    &quot;⋯&quot; trên thanh {hostApp} và chọn &quot;Mở bằng trình duyệt&quot;.
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* Lời chào — đổi ngay theo Tên gợi nhớ khách nhập */}
             <div className="rainbow-frame mb-5 inline-block w-full">
