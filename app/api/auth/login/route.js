@@ -67,28 +67,10 @@ export async function POST(request) {
       displayName: user.display_name,
     });
 
-    // Trước đây dùng `process.env.NODE_ENV === "production"` để quyết định cờ
-    // `secure` của cookie. Vấn đề: cờ này LUÔN là true trên môi trường
-    // production dù request thực tế có tới qua HTTPS hay không (vd: sau một
-    // proxy/CDN không forward đúng, hoặc trường hợp hiếm gặp domain phụ chưa
-    // có SSL) — khi đó trình duyệt sẽ ÂM THẦM từ chối lưu cookie "secure" vì
-    // request không phải HTTPS thật, khiến người dùng đăng nhập "thành công"
-    // (API trả 200) nhưng sang trang /dashboard lại bị đá về /login vì không
-    // còn cookie phiên. Đây là nguyên nhân chính khiến "bấm Đăng nhập cứ load
-    // lại trang" với một số người dùng.
-    //
-    // Sửa: dựa trên PROTOCOL THẬT của request (ưu tiên header
-    // x-forwarded-proto do Vercel/most proxy set đúng), chỉ bật `secure`
-    // khi request thực sự qua HTTPS — luôn hoạt động đúng dù deploy ở đâu.
-    const forwardedProto = request.headers.get("x-forwarded-proto");
-    const isHttps = forwardedProto
-      ? forwardedProto.split(",")[0].trim() === "https"
-      : request.nextUrl.protocol === "https:";
-
     const response = NextResponse.json(respondWithSession(user));
     response.cookies.set(SESSION_COOKIE_NAME, token, {
       httpOnly: true,
-      secure: isHttps,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
       maxAge: SESSION_MAX_AGE_SECONDS,
