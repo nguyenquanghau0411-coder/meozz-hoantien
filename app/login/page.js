@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { DEFAULT_THEME } from "../../lib/theme";
 
@@ -183,6 +183,18 @@ function CheckBadge() {
   );
 }
 
+// Phát hiện trình duyệt "trong app" (Zalo/Facebook/Messenger/TikTok/Instagram...).
+// Các webview này hay có chính sách cookie riêng, đôi khi không lưu được
+// cookie phiên đăng nhập set qua fetch() → khiến "bấm Đăng nhập cứ load lại
+// trang". Không có cách nào ép các app này hoạt động đúng 100% từ phía web,
+// nên cách xử lý tốt nhất là cảnh báo trước và hướng dẫn khách mở bằng trình
+// duyệt thật (Chrome/Safari).
+function detectInAppBrowser() {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent || "";
+  return /Zalo|FBAN|FBAV|FB_IAB|Messenger|Instagram|TikTok|Line\//i.test(ua);
+}
+
 export default function LoginPage() {
   const router = useRouter();
 
@@ -194,7 +206,26 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [inAppBrowser, setInAppBrowser] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const theme = DEFAULT_THEME;
+
+  useEffect(() => {
+    // Chỉ đọc navigator.userAgent SAU khi mount ở client (không phải lúc
+    // SSR) để tránh lệch nội dung giữa server/client (hydration mismatch).
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- cần đợi mount xong mới có navigator, không có cách nào khác để tránh hydration mismatch
+    setInAppBrowser(detectInAppBrowser());
+  }, []);
+
+  async function copyCurrentLink() {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    } catch {
+      // Bỏ qua nếu clipboard không khả dụng.
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -211,11 +242,39 @@ export default function LoginPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nickname, myId }),
+        cache: "no-store",
       });
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Có lỗi xảy ra, vui lòng thử lại.");
         setLoading(false);
+        return;
+      }
+
+      // QUAN TRỌNG: API trả 200 chỉ có nghĩa là server đã GỬI cookie phiên
+      // đi, KHÔNG có nghĩa là trình duyệt của khách đã LƯU cookie đó (một số
+      // trình duyệt trong app Zalo/Facebook/chế độ riêng tư sẽ âm thầm bỏ
+      // qua cookie). Nếu cứ tin tưởng rồi điều hướng thẳng sang /dashboard,
+      // trang /dashboard sẽ không thấy cookie và đá ngược về /login — người
+      // dùng thấy y hệt như "bấm Đăng nhập bị load lại trang", không rõ lý do.
+      //
+      // Nên gọi thẳng /api/me ngay sau đó để XÁC NHẬN cookie đã thực sự được
+      // trình duyệt lưu, trước khi báo thành công / điều hướng.
+      let cookieOk = false;
+      try {
+        const check = await fetch("/api/me", { cache: "no-store" });
+        cookieOk = check.ok;
+      } catch {
+        cookieOk = false;
+      }
+
+      if (!cookieOk) {
+        setLoading(false);
+        setError(
+          inAppBrowser
+            ? "Trình duyệt trong ứng dụng đang chặn phiên đăng nhập. Vui lòng nhấn nút bên dưới để mở bằng Chrome/Safari rồi đăng nhập lại."
+            : "Trình duyệt đang chặn cookie đăng nhập. Vui lòng bật cho phép cookie hoặc thử lại bằng Chrome/Safari."
+        );
         return;
       }
 
@@ -257,6 +316,29 @@ export default function LoginPage() {
       <CuteCatIcon className="hidden sm:block absolute top-24 right-14 w-10 h-10 text-[var(--highlight)]/10" />
 
       <div className="w-full max-w-md relative z-10">
+        {/* Cảnh báo cho khách đang mở link bằng trình duyệt trong app
+            (Zalo/Facebook/TikTok...) — nhóm dễ bị lỗi "đăng nhập cứ load lại
+            trang" nhất vì các webview này hay chặn cookie phiên đăng nhập. */}
+        {inAppBrowser && (
+          <div className="mb-4 rounded-xl border border-[#f2c14e]/60 bg-[#fff6e0] px-3.5 py-3 text-[12px] leading-snug text-[#7a5b12]">
+            <p className="font-bold mb-1.5 flex items-center gap-1.5">
+              ⚠️ Bạn đang mở bằng trình duyệt trong ứng dụng
+            </p>
+            <p className="mb-2">
+              Trình duyệt này đôi khi chặn phiên đăng nhập khiến bạn không vào được
+              trang sau khi bấm Đăng nhập. Để chắc chắn đăng nhập được, hãy sao chép
+              link và mở bằng Chrome/Safari.
+            </p>
+            <button
+              type="button"
+              onClick={copyCurrentLink}
+              className="inline-flex items-center gap-1.5 bg-[#7a5b12] text-white font-bold px-3 py-1.5 rounded-full active:scale-95 transition-all"
+            >
+              {linkCopied ? "✓ Đã sao chép link" : "📋 Sao chép link để mở bằng trình duyệt khác"}
+            </button>
+          </div>
+        )}
+
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-3">
             <div className="w-9 h-9 rounded-full bg-gold flex items-center justify-center shrink-0 shadow-md shadow-[var(--highlight)]/20">
